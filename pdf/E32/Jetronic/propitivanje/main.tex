@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+
+% Ћирилица: кодирање фонта и језик (српски, ћирилица)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Величина стране и маргине
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
+
+% Корисни пакети
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртање електричних кола (европски симболи)
+\usepackage[european]{circuitikz}
+\usetikzlibrary{babel}
+
+% Оквир за решене примере
+\newtcolorbox[auto counter]{primer}{breakable,
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=10pt}
+
+% Оквир за кључне формуле
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=8pt, right=8pt, top=4pt, bottom=4pt}
+
+\title{KE/L/LH - Jetronik пропитивање}
+\author{Основи електротехнике 1}
+\date{}
+
+\begin{document}
+\maketitle
+
+%==================================================================
+\section{Везе кондензатора}
+%==================================================================
+
+\subsection{Паралелна веза кондензатора}
+
+\begin{kljucno}
+\[
+C_e = C_1 + C_2 + \dots + C_n
+\]
+\end{kljucno}
+
+
+\end{document}

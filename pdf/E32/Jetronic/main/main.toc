@@ -1,0 +1,43 @@
+\babel@toc {serbianc}{}\relax 
+\contentsline {chapter}{\numberline {1}Генерализација ОТО мотора}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Коефицијент вишка ваздуха}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Подела система убризгавања}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Контрола рада мотора прилагођавањем смеше}{4}{section.1.3}%
+\contentsline {chapter}{\numberline {2}KE-Jetronic систем убризгавања}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Електрична пумпа за гориво}{6}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Хидраулична пригушница (шпајхер)}{6}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Филтер за гориво}{6}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Регулатор системског притиска}{7}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Бризгаљке (дизне)}{7}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Мерач протока ваздуха (протокомер)}{8}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Дозатор}{8}{subsection.2.1.6}%
+\contentsline {subsection}{\numberline {2.1.7}Електрохидраулични регулатор (актуатор)}{10}{subsection.2.1.7}%
+\contentsline {section}{\numberline {2.2}Режими рада КЕ мотора}{10}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Хладан старт}{10}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Загревање мотора}{11}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Обогаћивање смеше током убрзања}{11}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Обогаћивање смеше при пуном оптерећењу}{11}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Празан ход хладног мотора}{11}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Празан ход}{12}{subsection.2.2.6}%
+\contentsline {section}{\numberline {2.3}Управљаче функције}{12}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Кочење мотором}{12}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Ограничење броја обртаја}{13}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Висинска корекција смеше}{13}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}ЛАМБДА регулација}{13}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}Електрична шема система}{14}{subsection.2.3.5}%
+\contentsline {chapter}{\numberline {3}L-Jetronic систем убризгавања}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Принцип рада L-Jetronic система}{15}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Компоненте L-Jetronic система}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Разделна цев и регулатор притиска}{16}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Мерење количине усисаног ваздуха}{16}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Прилагођавање радне смеше условима рада}{17}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Електромагнетне бризгаљке}{17}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Допунски вентил за ваздух}{18}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Електронска управљачка јединица}{18}{subsection.3.2.6}%
+\contentsline {subsection}{\numberline {3.2.7}Реле}{19}{subsection.3.2.7}%
+\contentsline {section}{\numberline {3.3}Електрична шема L-Jetronic система}{19}{section.3.3}%
+\contentsline {section}{\numberline {3.4}LH-Jetronic}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Разлика у односу на L-Jetronic}{20}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Мерач масе ваздуха са врућом жицом}{20}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Остале новине}{20}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Поређење система убризгавања}{21}{section.3.5}%

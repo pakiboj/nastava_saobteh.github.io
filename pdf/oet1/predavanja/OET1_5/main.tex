@@ -1,0 +1,311 @@
+\documentclass[12pt]{article}
+
+% Ћирилица: кодирање фонта и језик (српски, ћирилица)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Величина стране и маргине
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
+
+% Корисни пакети
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртање електричних кола (европски симболи)
+\usepackage[european]{circuitikz}
+\usetikzlibrary{arrows.meta, decorations.markings, babel}
+
+% Стрелица на средини линије (за струје у чвору)
+\tikzset{
+    sredstrelica/.style={postaction={decorate}, decoration={markings,
+        mark=at position 0.55 with {\arrow{Stealth[length=7pt]}}}},
+    obilazak/.style={-{Stealth[length=6pt]}, gray!70!black},
+}
+
+% Оквир за решене примере
+\newtcolorbox[auto counter]{primer}{breakable,
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=10pt}
+
+% Оквир за кључне формуле
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=8pt, right=8pt, top=4pt, bottom=4pt}
+
+\title{Кирхофови закони}
+\author{Основи електротехнике 1}
+\date{}
+
+\begin{document}
+\maketitle
+
+%==================================================================
+\section{Основни појмови}
+%==================================================================
+
+Пре него што уведемо Кирхофове законе, потребно је да знамо три појма:
+
+\begin{itemize}
+    \item \textbf{Чвор} је тачка у колу у којој се спајају најмање три
+          проводника.
+    \item \textbf{Грана} је део кола између два суседна чвора. Кроз све
+          елементе једне гране тече иста струја.
+    \item \textbf{Контура} је било који затворени пут у колу, који почиње и
+          завршава се у истој тачки.
+\end{itemize}
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E$, invert] (0,3)
+          to[R, l=$R_1$] (4,3)
+          to[R, l_=$R_2$, -*] (4,0)
+          -- (0,0);
+    \draw (4,3) -- (7,3) to[R, l_=$R_3$] (7,0) -- (4,0);
+    \fill (4,3) circle (2.5pt) node[above]{$A$};
+    \node[below] at (4,0) {$B$};
+\end{circuitikz}
+\end{center}
+
+У колу на слици:
+\begin{itemize}
+    \item тачке $A$ и $B$ су \textbf{чворови} (у свакој се спајају три
+          проводника),
+    \item постоје три \textbf{гране}: грана са извором $E$ и отпорником $R_1$,
+          грана са отпорником $R_2$ и грана са отпорником $R_3$,
+    \item једна \textbf{контура} је, на пример, затворени пут
+          $E \to R_1 \to R_2 \to E$.
+\end{itemize}
+
+На шемама \textbf{дужа црта} у симболу извора означава позитиван пол ($+$),
+а краћа негативан пол ($-$).
+
+%==================================================================
+\section{Први Кирхофов закон}
+%==================================================================
+
+Наелектрисање се у чвору не може ни створити ни изгубити. Зато колико
+струје уђе у чвор, толико мора и да изађе из њега:
+
+\begin{kljucno}
+\[
+\sum I_{\text{улазне}} = \sum I_{\text{излазне}}
+\]
+\end{kljucno}
+
+Ово је као раскрсница цеви у водоводу: колико воде утекне у раскрсницу,
+толико мора и да истекне из ње, јер се вода нигде не губи.
+
+\begin{center}
+\begin{tikzpicture}[thick]
+    \draw[sredstrelica] (-2.2,0)    -- (0,0) node[pos=0.45, above]{$I_1$};
+    \draw[sredstrelica] (0,2)       -- (0,0) node[pos=0.45, right]{$I_2$};
+    \draw[sredstrelica] (0,0)       -- (2.2,0) node[pos=0.55, above]{$I_3$};
+    \draw[sredstrelica] (0,0)       -- (0,-2) node[pos=0.55, right]{$I_4$};
+    \fill (0,0) circle (3pt);
+\end{tikzpicture}
+\end{center}
+
+За чвор на слици струје $I_1$ и $I_2$ улазе, а $I_3$ и $I_4$ излазе, па је:
+\[
+I_1 + I_2 = I_3 + I_4
+\]
+
+Закон се може написати и у облику $\sum I = 0$, ако струје које улазе у чвор
+пишемо са знаком $+$, а струје које излазе са знаком $-$:
+$I_1 + I_2 - I_3 - I_4 = 0$.
+
+\textbf{Смер струје.} Када смер неке струје није познат, ми га
+\textbf{претпоставимо} и нацртамо стрелицу. Ако на крају добијемо
+\textbf{негативан} резултат, то значи да струја заправо тече у супротном смеру
+од претпостављеног, а њена јачина је једнака добијеном броју без минуса.
+
+\begin{primer}
+У чвор на слици изнад улазе струје $I_1 = 5\,\text{A}$ и $I_2 = 3\,\text{A}$,
+а излази струја $I_3 = 6\,\text{A}$. Израчунати струју $I_4$.
+
+\textbf{Решење:}
+\[
+I_1 + I_2 = I_3 + I_4
+\quad\Longrightarrow\quad
+I_4 = I_1 + I_2 - I_3 = 5\,\text{A} + 3\,\text{A} - 6\,\text{A} = 2\,\text{A}
+\]
+\end{primer}
+
+\begin{primer}
+У чвор улази струја $I_1 = 2\,\text{A}$, а излази струја $I_2 = 7\,\text{A}$.
+За трећу струју $I_3$ претпостављено је да \textbf{излази} из чвора.
+Израчунати $I_3$ и одредити њен стварни смер.
+
+\begin{center}
+\begin{tikzpicture}[thick]
+    \draw[sredstrelica] (-2.2,0) -- (0,0) node[pos=0.45, above]{$I_1$};
+    \draw[sredstrelica] (0,0)    -- (2.2,0) node[pos=0.55, above]{$I_2$};
+    \draw[sredstrelica] (0,0)    -- (0,-1.8) node[pos=0.55, right]{$I_3$};
+    \fill (0,0) circle (3pt);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Решење:}
+\[
+I_1 = I_2 + I_3
+\quad\Longrightarrow\quad
+I_3 = I_1 - I_2 = 2\,\text{A} - 7\,\text{A} = -5\,\text{A}
+\]
+Резултат је негативан, па струја $I_3$ заправо \textbf{улази} у чвор и има
+јачину $5\,\text{A}$.
+
+\textbf{Провера:} у чвор улазе $2\,\text{A} + 5\,\text{A} = 7\,\text{A}$, а
+излази $7\,\text{A}$.
+\end{primer}
+
+%==================================================================
+\section{Други Кирхофов закон}
+%==================================================================
+
+Када обиђемо затворену контуру и вратимо се у почетну тачку, враћамо се на
+исти потенцијал. Зато је у свакој затвореној контури збир електромоторних
+сила (напона) једнак збиру падова напона на отпорницима:
+
+\begin{kljucno}
+\[
+\sum E = \sum R \cdot I
+\]
+\end{kljucno}
+
+\begin{kljucno}
+\[
+\sum V = \sum R \cdot I
+\]
+\end{kljucno}
+
+Закон примењујемо овим редом:
+\begin{enumerate}
+    \item Изаберемо \textbf{смер обиласка} контуре (најчешће у смеру казаљке
+          на сату) и означимо га кружном стрелицом.
+    \item Електромоторну силу $E$ пишемо са знаком $+$ ако кроз извор
+          пролазимо од $-$ ка $+$ пола, а са знаком $-$ ако пролазимо од $+$ ка
+          $-$ полу.
+    \item Пад напона $R \cdot I$ пишемо са знаком $+$ ако се смер струје
+          поклапа са смером обиласка, а са знаком $-$ ако је супротан.
+\end{enumerate}
+
+\begin{primer}
+У колу на слици је $E = 24\,\text{V}$, $R_1 = 4\,\Omega$ и
+$R_2 = 8\,\Omega$. Израчунати струју у колу и напоне на отпорницима.
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E$, invert] (0,3)
+          to[short, i>^=$I$] (1,3)
+          to[R, l=$R_1$] (4,3)
+          to[R, l=$R_2$] (4,0)
+          -- (0,0);
+    \draw[obilazak] (2,2.1) arc[start angle=90, end angle=-200, radius=0.6];
+\end{circuitikz}
+\end{center}
+
+\textbf{Решење:}
+
+Обилазимо контуру у смеру казаљке на сату. Кроз извор пролазимо од $-$ ка
+$+$, па је $E$ позитивна. Струја тече у смеру обиласка, па су оба пада
+напона позитивна:
+\[
+E = R_1 I + R_2 I = (R_1 + R_2)\, I
+\quad\Longrightarrow\quad
+I = \frac{E}{R_1 + R_2} = \frac{24\,\text{V}}{4\,\Omega + 8\,\Omega} = 2\,\text{A}
+\]
+Напони на отпорницима:
+\[
+U_1 = R_1 I = 4\,\Omega \cdot 2\,\text{A} = 8\,\text{V}, \qquad
+U_2 = R_2 I = 8\,\Omega \cdot 2\,\text{A} = 16\,\text{V}
+\]
+\textbf{Провера:} $U_1 + U_2 = 8\,\text{V} + 16\,\text{V} = 24\,\text{V} = E$.
+\end{primer}
+
+\begin{primer}
+У колу на слици су два извора, $E_1 = 20\,\text{V}$ и $E_2 = 8\,\text{V}$, и
+отпорници $R_1 = 2\,\Omega$ и $R_2 = 4\,\Omega$. Израчунати струју у колу.
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E_1$, invert] (0,3)
+          to[short, i>^=$I$] (1,3)
+          to[R, l=$R_1$] (4,3)
+          to[battery1, l=$E_2$] (4,0)
+          to[R, l=$R_2$] (0,0);
+    \draw[obilazak] (2,2.1) arc[start angle=90, end angle=-200, radius=0.6];
+\end{circuitikz}
+\end{center}
+
+\textbf{Решење:}
+
+Обилазимо контуру у смеру казаљке на сату:
+\begin{itemize}
+    \item кроз извор $E_1$ пролазимо од $-$ ка $+$, па је $E_1$ позитивна,
+    \item кроз извор $E_2$ пролазимо од $+$ ка $-$, па је $E_2$ негативна,
+    \item струја тече у смеру обиласка, па су падови напона позитивни.
+\end{itemize}
+\[
+E_1 - E_2 = R_1 I + R_2 I
+\quad\Longrightarrow\quad
+I = \frac{E_1 - E_2}{R_1 + R_2}
+  = \frac{20\,\text{V} - 8\,\text{V}}{2\,\Omega + 4\,\Omega}
+  = \frac{12\,\text{V}}{6\,\Omega} = 2\,\text{A}
+\]
+Извори делују један против другог, па струју стварају само са разликом
+својих електромоторних сила.
+\end{primer}
+
+%==================================================================
+\section{Примена оба закона}
+%==================================================================
+
+У сложенијим колима користимо оба закона заједно: први закон за чворове, а
+други за контуре.
+
+\begin{primer}
+Отпорници $R_1 = 6\,\Omega$ и $R_2 = 3\,\Omega$ везани су паралелно на извор
+$E = 12\,\text{V}$. Помоћу Кирхофових закона израчунати струје $I_1$, $I_2$ и
+$I$.
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E$, invert] (0,3)
+          to[short, i>^=$I$, -*] (3,3)
+          to[R, l_=$R_1$, i>^=$I_1$, -*] (3,0)
+          -- (0,0);
+    \draw (3,3) -- (6,3)
+          to[R, l_=$R_2$, i>^=$I_2$] (6,0)
+          -- (3,0);
+\end{circuitikz}
+\end{center}
+
+\textbf{Решење:}
+
+\textbf{Други закон, контура} $E \to R_1$: у контури су само извор и
+отпорник $R_1$:
+\[
+E = R_1 I_1
+\quad\Longrightarrow\quad
+I_1 = \frac{E}{R_1} = \frac{12\,\text{V}}{6\,\Omega} = 2\,\text{A}
+\]
+
+\textbf{Други закон, контура} $E \to R_2$:
+\[
+E = R_2 I_2
+\quad\Longrightarrow\quad
+I_2 = \frac{E}{R_2} = \frac{12\,\text{V}}{3\,\Omega} = 4\,\text{A}
+\]
+
+\textbf{Први закон, горњи чвор:} струја $I$ улази, а $I_1$ и $I_2$ излазе:
+\[
+I = I_1 + I_2 = 2\,\text{A} + 4\,\text{A} = 6\,\text{A}
+\]
+\end{primer}
+
+\end{document}

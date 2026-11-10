@@ -1,0 +1,594 @@
+\documentclass{article}
+
+% Ćirilica: kodiranje fonta i jezik (srpski, ćirilica)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Veličina strane i margine
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Korisni paketi
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tcolorbox}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртежи (TikZ)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.markings, babel}
+
+% TikZ стилови који се понављају на цртежима
+\tikzset{
+    naboj/.style={circle, draw, thick, minimum size=6mm, inner sep=0pt, font=\small},
+    jezgro/.style={circle, draw, thick, fill=gray!15, minimum size=7mm, inner sep=0pt, font=\small},
+    elektron/.style={circle, draw, fill=cyan!30, inner sep=0pt, minimum size=5pt},
+    supljina/.style={circle, draw, thick, minimum size=5mm, inner sep=0pt, font=\small},
+    sredstrelica/.style={postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Stealth}}}},
+}
+
+\title{ОЕТ 1 - Уводно предавање}
+\author{Саобраћајно техничка школа, Београд, Земун}
+
+\begin{document}
+\maketitle
+
+%==================================================================
+% БЕЛЕШКЕ ИЗ СВЕСКЕ (редом по сликама IMG_6501 -- IMG_6508)
+%==================================================================
+
+\section{Увод у разумевање струје}
+
+% ------------------------- IMG_6501 -------------------------
+
+\textbf{Кристијан Хајгенс}: 1629
+\begin{itemize}
+    \item Сат са клатном -- 1657
+    \item Телескоп -- 1655 $\rightarrow$ Сатурнови прстенови
+    \item Хелиоцентрични систем -- 1698 \textit{Cosmotheoros}
+\end{itemize}
+
+Кристијан Хајгенс био је Холандски математичар и физичар. Пошто је био из фамилије дипломата, отац Кристијан Хајгенс који је био композитор а пре свега секретар принчева и брат Константин Хајгенс 
+који је такође био секретар принчева, и пошто је био из богате и угледне породице имао је вишак слободног времена и сигурности коју је уложио у размишљање и  откривање света око себе. Астрономијаа му је билаа страст, као и већини тадашњих мислиоца, и гледање у небо му је давало идеје којима је богатио свет око себе. 
+
+Кроз посматрање неба открио је први Сатурнов месец, Сатурново прстење и наајважније од свега, утабаао је пут како би се развила теорија које је зачела научни метод, \textbf{Хелиоцентрични систем}.
+
+\subsection{Атоми}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        % језгро
+        \node[jezgro] at (0,0) {Si};
+        % љуске и број електрона на свакој
+        \foreach \r/\n in {1/2, 1.6/8, 2.2/4} {
+            \draw (0,0) circle (\r);
+            \node[fill=white, inner sep=1pt, font=\small] at (\r,0) {\n};
+        }
+        % 1. љуска: 2 електрона
+        \foreach \a in {90,270} \node[elektron] at (\a:1) {};
+        % 2. љуска: 8 електрона
+        \foreach \a in {22.5,67.5,...,337.5} \node[elektron] at (\a:1.6) {};
+        % 3. љуска: 4 валентна електрона
+        \foreach \a in {45,135,225,315} \node[elektron] at (\a:2.2) {};
+        \node[font=\large] at (-2.5,2.3) {Si};
+    \end{tikzpicture}
+    \caption{Силицијум (Si) -- распоред електрона по љускама}
+    \label{fig:si}
+\end{figure}
+
+Атоме  дефинише њихов атомски број. Атомски број представља колико је атом тежак, односно колико електрона може да држи при  себи. Атоми се распоређу по правилима дефинисаним у хемији али је најбитније да у последњем енергетском слују - \textbf{валентном} - може да се налази мааксимаално 8 електрона. Број електрона у валентном слоју дефинише проводност материјала.
+
+По проводности, материјали се деле на: \textbf{Изолаторе(диалектрике), Проводнике и Полупроводнике(нећемо их обрађивати)}
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!60, title=Важно]
+
+    Више валентних електрона $\rightarrow$ изолатори.\\
+    Мање валентних електрона $\rightarrow$ проводници.\\
+\\
+    проводници $<$ 4 валентна електрона $<$ изолатори 
+
+\end{tcolorbox}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Елемент & Атомски број & Распоред по љускама \\
+        \hline
+        Si & 14 & $2+8+4$ \\
+        Cu & 29 & $2+8+18+1$ \\
+        Au & 79 & $2+8+18+32+18+1$ \\
+        Al & 13 & $2+8+3$ \\
+        Fe & 26 & $2+8+14+2$ \\
+        \hline
+    \end{tabular}
+    \caption{Распоред електрона -- Si, Cu, Au, Al, Fe}
+    \label{tab:metali}
+\end{table}
+
+\textbf{Проводници} су материјали који проводе наелектрисање са лакоћом јер атоми од којих су сачињени ти материјали немају попуњену валентну љуску.
+
+\textbf{Изолатори} - дијалектрици - супротно, слабије проводе електроне јер атоми од којих су сачињени немају простора у својој валентној љусци да приме додатне електроне
+
+
+% ------------------------- IMG_6502 -------------------------
+
+\subsection{Историјат електрицитета}
+
+\begin{itemize}
+    \item Античко доба $\rightarrow$ трљање ћилибара, тканине
+    \item 1785. Кулон -- закон електростатике
+    \item 1820. А. Ампер -- открива однос електричних и магнетских појава
+\end{itemize}
+
+\subsection{Електростатика}
+
+Тела се могу наелектрисати \textbf{без додира} -- \textbf{електростатичком индукцијом}.
+
+\begin{equation}
+    Q = \pm N e
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+    F &= k \frac{|Q_1| |Q_2|}{r^2},\\
+    k &= 9 \cdot 10^{9} \; \frac{\mathrm{N m^2}}{\mathrm{C^2}} \quad \text{за ваздух} \\
+\end{aligned}
+\end{equation}
+
+% ------------------------- IMG_6503 -------------------------
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % 1. ред: Q1 (+), Q2 (-)
+        \node[naboj, label=above:{$Q_1$}] (a1) at (0,0) {$+$};
+        \node[naboj, label=above:{$Q_2$}] (b1) at (4,0) {$-$};
+        \draw[->, thick] (a1.east) -- ++(1,0) node[midway, above] {$F_{21}$};
+        \draw[->, thick] (b1.west) -- ++(-1,0) node[midway, above] {$F_{12}$};
+        % 2. ред: Q1 (-), Q2 (-)
+        \node[naboj, label=above:{$Q_1$}] (a2) at (0,-1.6) {$-$};
+        \node[naboj, label=above:{$Q_2$}] (b2) at (4,-1.6) {$-$};
+        \draw[->, thick] (a2.west) -- ++(-1,0) node[midway, above] {$F_{21}$};
+        \draw[->, thick] (b2.east) -- ++(1,0) node[midway, above] {$F_{12}$};
+        % 3. ред: Q1 (+), Q2 (+)
+        \node[naboj, label=above:{$Q_1$}] (a3) at (0,-3.2) {$+$};
+        \node[naboj, label=above:{$Q_2$}] (b3) at (4,-3.2) {$+$};
+        \draw[->, thick] (a3.west) -- ++(-1,0) node[midway, above] {$F_{21}$};
+        \draw[->, thick] (b3.east) -- ++(1,0) node[midway, above] {$F_{12}$};
+    \end{tikzpicture}
+    \caption{Силе између наелектрисања $Q_1$ и $Q_2$}
+    \label{fig:sile}
+\end{figure}
+
+\subsection{Електрично поље}
+
+Електрично поље је последица постојања наелектрисања. Њега дефинишемо само за ту честицу коју посматрамо.
+
+\begin{equation}
+    E = \frac{F}{Q_p}
+\end{equation}
+
+\begin{equation}
+    \Rightarrow E = \frac{Q}{4 \pi \varepsilon r^2} = k\frac{Q}{r^2}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % --- позитивно и негативно наелектрисање ---
+        \node[naboj] (p) at (0,0) {$+$};
+        \node[naboj] (m) at (4,0) {$-$};
+        \draw[sredstrelica] (p) -- (m);
+        \foreach \a in {25,50} {
+            \draw[sredstrelica] (p) to[out=\a, in=180-\a] (m);
+            \draw[sredstrelica] (p) to[out=-\a, in=180+\a] (m);
+        }
+        \foreach \a in {120,180,240} \draw[->] (p) -- ++(\a:1.3);
+        \foreach \a in {60,0,-60} \draw[<-] (m) -- ++(\a:1.3);
+
+        % --- два позитивна наелектрисања ---
+        \node[naboj] (l) at (0,-4) {$+$};
+        \node[naboj] (d) at (4,-4) {$+$};
+        \foreach \a in {100,140,180,220,260} \draw[->] (l) -- ++(\a:1.2);
+        \draw[->] (l) to[out=40, in=-100] ++(1.3,1.5);
+        \draw[->] (l) to[out=-40, in=100] ++(1.3,-1.5);
+        \foreach \a in {80,40,0,-40,-80} \draw[->] (d) -- ++(\a:1.2);
+        \draw[->] (d) to[out=140, in=-80] ++(-1.3,1.5);
+        \draw[->] (d) to[out=-140, in=80] ++(-1.3,-1.5);
+    \end{tikzpicture}
+    \caption{Линије електричног поља}
+    \label{fig:linije-polja}
+\end{figure}
+
+% ------------------------- IMG_6504 -------------------------
+
+
+
+\subsection{Потенцијал и напон}
+
+\textbf{Потенцијал} -- \textbf{рад} који спољна сила мора извршити за померање пробног наелектрисања.
+
+\begin{equation}
+    V = \frac{W}{Q_p}
+\end{equation}
+
+\begin{center}
+    \begin{tikzpicture}
+        \fill (0,0) circle (2pt) node[above] {$V_A$};
+        \fill (3,-0.3) circle (2pt) node[above] {$V_B$};
+    \end{tikzpicture}
+\end{center}
+
+Са \textbf{U} дефинишемо напон. То је разлика потенцијалаа измешу 2 тачке.
+
+\begin{equation}
+    U_{AB} = V_A - V_B
+\end{equation}
+
+\subsection{Смерови електрона, струје и напона}
+
+Посматрамо проводник (или отпорник) чији је један крај на вишем потенцијалу ($+$), а други на нижем ($-$).
+
+\begin{itemize}
+    \item \textbf{Кретање електрона одражава се као скакање електронаа са једног атома на други.}
+    Кретање електрона за собом оставља празан енергетски простор -- \textbf{шупљине}, које се привидно крећу у супротном смеру.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        \draw[->, thick] (-0.4,0) -- (-1.9,0);
+        \node[supljina] at (0,0) {};
+        \node[supljina] at (1.2,0) {$e$};
+        \draw[->, thick] (1.6,0) -- (3.1,0);
+    \end{tikzpicture}
+    \caption{Шупљина (лево) и електрон (десно) се крећу у супротним смеровима}
+    \label{fig:supljina}
+\end{figure}
+
+\begin{itemize}
+    \item Струја представља усмерено кретање \textbf{шупљина}.
+\end{itemize}
+
+\begin{itemize}
+    \item Кретање електрона проузрокује електрично поље у супротном смеру.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        \node at (0,0.5) {$e$};
+        \draw[->, thick] (0.3,0.5) -- (2.8,0.5);
+        \node at (0,0) {$U$};
+        \draw[->, thick] (2.8,0) -- (0.3,0);
+    \end{tikzpicture}
+    \caption{Смер кретања електрона ($e$) и напона ($U$)}
+    \label{fig:e-u}
+\end{figure}
+
+Да се подсетимо. Електрон се креће у једном смеру па се струја и напон крећу у супротном.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        \node at (-0.6,0) {$-$};
+        \node at (5.6,0) {$+$};
+        % електрон: креће се ка +
+        \node[circle, draw, thick, minimum size=6mm, inner sep=0pt] (e) at (0.3,0.9) {};
+        \node[above left] at (e.north) {$e^-$};
+        \draw[->, thick] (e.east) -- (4.6,0.9);
+        % шупљина / струја: креће се ка -
+        \node[circle, draw, thick, minimum size=6mm, inner sep=0pt] (h) at (4.7,0) {};
+        \draw[->, thick] (h.west) -- (0.4,0) node[midway, below] {$I$};
+        % смер напона
+        \draw[->, thick] (4.9,-1) -- (0.4,-1) node[midway, below] {$V$};
+    \end{tikzpicture}
+    \caption{Електрон се креће од $-$ ка $+$, а струја $I$ и смер напона $V$ од $+$ ка $-$}
+    \label{fig:smerovi}
+\end{figure}
+
+АЛИ, ОВО ЈЕ ЈАКО ВАЖНО.
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!60, title=ЈАКО ВАЖНО]
+
+Смер кретања електричног поља се на шемама означава стрелицом која је оријентисаана \textbf{СУПРОТНО} од смера кретања напона са ознаком + (плус) на краају те стрелице.
+
+\end{tcolorbox}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % грана кола
+        % смер напона: од + ка -
+        \draw[->, thick] (4.4,0.5) -- (0.6,0.5) node[midway, above] {$V$};
+        % ознака напона: показује на +
+        \draw[->, thick] (0.2,1) to[out=70, in=110] (4.8,0.75);
+        \node at (2.5,2.35) {$V$};
+        \node at (5.25,0.85) {$+$};
+    \end{tikzpicture}
+    \caption{Права стрелица: смер напона (од $+$ ка $-$). Закривљена стрелица: ознака напона, показује на $+$}
+    \label{fig:oznaka-napona}
+\end{figure}
+
+Овако изгледа на примеру отпорника, пошто ћемо овај случај виђати јако често.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % отпорник између два краја
+        \draw[thick] (0,0) circle (2pt) -- (1.2,0)
+            -- (1.35,0.35) -- (1.65,-0.35) -- (1.95,0.35) -- (2.25,-0.35) -- (2.55,0.35) -- (2.7,0)
+            -- (3.9,0) circle (2pt);
+        % ознака напона: показује на +
+        \draw[->, thick] (2.9,0.8) to[out=110, in=60] (0.15,0.65);
+        \node at (1.6,1.85) {$V$};
+        \node at (-0.3,0.45) {$+$};
+        % струја: од + ка -
+        \draw[->, thick] (0.4,-0.8) -- (3.5,-0.8) node[midway, below] {$I$};
+    \end{tikzpicture}
+    \caption{Отпорник: струја $I$ тече од $+$ ка $-$, а ознака напона $V$ показује на $+$}
+    \label{fig:otpornik-napon}
+\end{figure}
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!60, title=ВАЖНО ЗА ЗАПАМТИТИ]
+\begin{itemize}
+    \item \textbf{Електрони} ($e^-$) се крећу од $-$ ка $+$, јер их привлачи позитиван крај.
+    \item \textbf{Струја} $I$ (технички смер) тече од $+$ ка $-$, тј. \textbf{супротно} од електрона. То је исти смер у коме се привидно крећу шупљине.
+    \item \textbf{Смер напона} $V$ (смер пада потенцијала) је од $+$ ка $-$, исто као струја кроз отпорник.
+    \item \textbf{Ознака напона} (стрелица коју цртамо у колу) се црта \textbf{супротно} од смера напона: креће од $-$ и \textbf{показује на $+$}. Она је дакле у истом смеру у коме се крећу електрони.
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Електростатичка индукција}
+
+Електростатичка индукција представља наелектрисавање тела или честица, без додира или трљања.
+
+До сада смо посматрали како се понаша једна наелектрисана честица. 
+Уколико не посматрамо више само тачкаста наелектрисања, услед електростатичке индукције која делује на неко тело, наелектрисање се гомила по површини најближој спољном пољу.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        \node[naboj] (q) at (0,0) {$+$};
+        \draw[->] (q) to[out=60, in=180] (2.2,1.1);
+        \draw[->] (q) to[out=-30, in=180] (2.2,-0.6);
+        % површина тела
+        \draw[thick] (2.5,-1.8) -- (2.5,1.8);
+        \foreach \y in {1.4,1.0,...,-1.4} \node at (2.8,\y) {$-$};
+    \end{tikzpicture}
+    \caption{Електростатичка индукција}
+    \label{fig:indukcija}
+\end{figure}
+
+% TODO: нисам успео да прочитам заокружену реч испод „Пример:“ -- провери у свесци.
+Пример: \textbf{громобран}, \textbf{Рашије}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % громобран
+        \draw[thick] (-0.9,0) -- (0,3) -- (0.9,0);
+        \node[naboj, minimum size=5mm] at (0,1.75) {$-$};
+        \node[naboj, minimum size=5mm] at (0.6,3.6) {$+$};
+        \node at (0,4.4) {громобран};
+        % облак и тло
+        \begin{scope}[xshift=4cm]
+            \draw[thick] (-1.3,3) -- (1.3,3);
+            \foreach \x in {-0.8,0,0.8} \node at (\x,3.3) {$+$};
+            \draw[->] (-0.6,1.6) -- (-0.6,2.7);
+            \draw[->] (0.6,2.7) -- (0.6,1.6);
+            \draw[thick] (-0.9,0) -- (0,1.3) -- (0.9,0);
+            \node at (0,0.5) {$-$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Пример: громобран}
+    \label{fig:gromobran}
+\end{figure}
+
+% ------------------------- IMG_6508 -------------------------
+
+\subsection{Фарадејев кавез}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        \node[naboj] (q) at (0,0) {$+$};
+        % зидови кавеза
+        \draw[thick] (1.6,-1.5) rectangle (5.1,1.5);
+        \draw[thick] (2.0,-1.1) rectangle (4.7,1.1);
+        % индуковано наелектрисање
+        \foreach \y in {0.85,0.3,-0.25,-0.8} \node[naboj, minimum size=3.5mm, font=\scriptsize] at (1.8,\y) {$-$};
+        \foreach \x in {2.3,3.0,3.7,4.4} \node[naboj, minimum size=3.5mm, font=\scriptsize] at (\x,1.3) {$-$};
+        \node at (3.35,0) {$E = 0$};
+        \draw[->] (q) to[out=50, in=180] (1.55,0.9);
+        \draw[->] (q) to[out=-50, in=180] (1.55,-0.9);
+    \end{tikzpicture}
+    \caption{Фарадејев кавез}
+    \label{fig:faradej}
+\end{figure}
+
+\section{ДОДАТАК ЗА ЗАИНТЕРЕСОВАНЕ}
+
+\subsection{Електрично поље у диелектрику}
+
+Када се изолатор(диалектрик) нађе у електричном пољу, његови молекули се \textbf{поларизују}: постају диполи окренути у смеру поља. Унутар изолатора се поље поништава, па некомпензована наелектрисања остају само на површини изолатора. Та \textbf{поларизациона наелектрисања} стварају поље $E_p$ које је супротног смера од поља $E_0$ које би наелектрисане плоче стварале у вакууму (ваздуху). Зато је поље у изолатору \textbf{слабије}:
+
+\begin{equation}
+    E = E_0 - E_p
+\end{equation}
+
+Смањење поља може се приказати и преко релативне диелектричне константе $\varepsilon_r$:
+
+\begin{equation}
+    E = \frac{E_0}{\varepsilon_r}
+\end{equation}
+
+За вакуум је $\varepsilon_r = 1$, а за све остале изолаторе $\varepsilon_r > 1$. Што се материјал лакше поларизује, то је $\varepsilon_r$ веће, а поље у њему слабије. На пример, у води је поље 80 пута слабије него у вакууму. \textbf{Апсолутна диелектрична константа} је:
+
+\begin{equation}
+    \varepsilon = \varepsilon_r \cdot \varepsilon_0, \qquad \varepsilon_0 = 8{,}85 \cdot 10^{-12} \; \frac{\mathrm{F}}{\mathrm{m}}
+\end{equation}
+
+Јединица $\mathrm{F/m}$ (фарад по метру) је исто што и $\mathrm{C^2/(N\,m^2)}$.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Диелектрик} & $\varepsilon_r$ & $\varepsilon = \varepsilon_r \varepsilon_0$ \; [$10^{-12}$ F/m] \\
+        \hline
+        вакуум & 1 & 8,85 \\
+        ваздух & 1,00059 & $\approx$ 8,85 \\
+        стакло & 2--16 & 17,7--141,6 \\
+        лискун & 4--8 & 35,4--70,8 \\
+        порцелан & 4,5--6 & 39,8--53,1 \\
+        вода & 80 & 708 \\
+        \hline
+        \multicolumn{3}{|l|}{\textit{\textbf{Остали често коришћени изолатори}}} \\
+        \hline
+        гума (природна) & 3--7 & 26,5--62,0 \\
+        силиконска гума & 2,9--4 & 25,7--35,4 \\
+        неопрен & 6,7 & 59,3 \\
+        PVC (изолација каблова) & 3,6--6 & 31,9--53,1 \\
+        полиетилен & 2,25 & 19,9 \\
+        тефлон (PTFE) & 2,1 & 18,6 \\
+        полистирен & 2,4--2,7 & 21,2--23,9 \\
+        папир & 2,3 & 20,4 \\
+        трансформаторско уље & 2,2 & 19,5 \\
+        бакелит & 3,5--5 & 31,0--44,3 \\
+        суво дрво & 2--6 & 17,7--53,1 \\
+        најлон & 4--5 & 35,4--44,3 \\
+        FR-4 (штампане плочице) & 4,5 & 39,8 \\
+        $\mathrm{SiO_2}$ (оксид у чиповима) & 3,9 & 34,5 \\
+        \hline
+        \multicolumn{3}{|l|}{\textit{\textbf{Полупроводник (за PN спојеве})}} \\
+        \hline
+        силицијум (Si) & 11,7 & 103,5 \\
+        \hline
+    \end{tabular}
+    \caption{Релативне и апсолутне диелектричне константе неких материјала}
+    \label{tab:dielektrici}
+\end{table}
+
+\subsection{Водоник, угљеник, кисеоник}
+
+Проводност ових атома можемо и сликовито приказати. Видимо да се у случају кисеоника, у ваалентној љуспи(зони) наалаази по 6 електронаа, што га чини слабо проводним. Односно ближе изолаатору него проводнику.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Елемент & Атомски број & Распоред по љускама \\
+        \hline
+        H & 1 & $1$ \\
+        C & 6 & $2+4$ \\
+        O & 8 & $2+6$ \\
+        \hline
+    \end{tabular}
+    \caption{Распоред електрона -- H, C, O}
+    \label{tab:hco}
+\end{table}
+
+У случају воде, могли бисмо да кажемо исту ствар. Додуше овде се јавља једна цака. Вода је молекул, не само атом. Такође је у течном стању. По законима хемије  у које нећу залазити, чини је бољим проводником од кисеоника, али и даље недовољно добрим.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (L) at (0,0);
+        \coordinate (R) at (2.6,0);
+        \foreach \c in {L,R} {
+            \node[jezgro] at (\c) {O};
+            \draw (\c) circle (0.6);   % 1. љуска
+            \draw (\c) circle (1.5);   % 2. љуска
+        }
+        % 1. љуска -- по 2 електрона
+        \node[elektron] at ($(L)+(90:0.6)$) {};
+        \node[elektron] at ($(L)+(250:0.6)$) {};
+        \node[elektron] at ($(R)+(70:0.6)$) {};
+        \node[elektron] at ($(R)+(270:0.6)$) {};
+        % 2. љуска -- електрони који нису у вези
+        \foreach \a in {105,130,160,220} \node[elektron] at ($(L)+(\a:1.5)$) {};
+        \foreach \a in {5,-15,-45,-88} \node[elektron] at ($(R)+(\a:1.5)$) {};
+        % заједнички електрони (у пресеку две љуске)
+        \node[elektron] at (1.3,0.75) {};
+        \node[elektron] at (1.3,-0.75) {};
+        \node[font=\large] at (1.3,2.1) {$\mathrm{O_2}$};
+    \end{tikzpicture}
+    \caption{Кисеоник $\mathrm{O_2}$}
+    \label{fig:o2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \coordinate (O) at (0,0);
+        \coordinate (HL) at (-2.3,0);
+        \coordinate (HR) at (2.3,0.1);
+        % кисеоник
+        \node[jezgro] at (O) {O};
+        \draw (O) circle (0.6);
+        \draw (O) circle (1.5);
+        \node[elektron] at ($(O)+(115:0.6)$) {};
+        \node[elektron] at ($(O)+(-40:0.6)$) {};
+        \foreach \a in {120,78,-82,-39} \node[elektron] at ($(O)+(\a:1.5)$) {};
+        % водоници
+        \foreach \c in {HL,HR} {
+            \node[jezgro] at (\c) {H};
+            \draw (\c) circle (0.85);
+        }
+        % заједнички електрони (H -- O)
+        \node[elektron] at (-1.47,0) {};
+        \node[elektron] at (1.47,0.06) {};
+        \node[font=\large] at (0,2.1) {$\mathrm{H_2O}$};
+    \end{tikzpicture}
+    \caption{Вода $\mathrm{H_2O}$}
+    \label{fig:h2o}
+\end{figure}
+
+\subsection{Молекул гуме}
+\textbf{Молекул изопрена} $\mathrm{C_5H_8}$ (основна јединица гуме):
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.75,
+        jez/.style={circle, draw, thick, fill=gray!15, minimum size=6mm, inner sep=0pt, font=\small},
+        el/.style={circle, draw, fill=cyan!30, inner sep=0pt, minimum size=5pt}]
+        % --- угљеници: 1. љуска (2 e) и 2. љуска (валентна) ---
+        \foreach \x/\y in {0/0, 2.5/0, 5/0, 7.5/0, 2.5/2.5} {
+            \draw (\x,\y) circle (0.55);
+            \draw (\x,\y) circle (1.5);
+            \node[el] at ($(\x,\y)+(45:0.55)$) {};
+            \node[el] at ($(\x,\y)+(225:0.55)$) {};
+            \node[jez] at (\x,\y) {C};
+        }
+        % --- водоници: само једна љуска ---
+        \foreach \x/\y in {-1.41/1.41, -1.41/-1.41, 0.5/2.5, 2.5/4.5, 4.5/2.5, 5/-2, 8.91/1.41, 8.91/-1.41} {
+            \draw (\x,\y) circle (0.85);
+            \node[jez] at (\x,\y) {H};
+        }
+        % --- заједнички електрони (у пресеку две љуске) ---
+        % двоструке везе C=C: по 4 електрона
+        \foreach \x/\y in {1.25/0.2, 1.25/-0.2, 1.25/0.55, 1.25/-0.55,
+                           6.25/0.2, 6.25/-0.2, 6.25/0.55, 6.25/-0.55}
+            \node[el] at (\x,\y) {};
+        % једноструке везе C-C: по 2 електрона
+        \foreach \x/\y in {3.75/0.2, 3.75/-0.2, 2.3/1.25, 2.7/1.25}
+            \node[el] at (\x,\y) {};
+        % везе C-H: по 2 електрона
+        \foreach \x/\y in {-1.08/0.8, -0.8/1.08, -0.8/-1.08, -1.08/-0.8,
+                           1.18/2.3, 1.18/2.7, 2.3/3.83, 2.7/3.83, 3.83/2.7, 3.83/2.3,
+                           5.2/-1.32, 4.8/-1.32, 8.3/1.08, 8.58/0.8, 8.58/-0.8, 8.3/-1.08}
+            \node[el] at (\x,\y) {};
+    \end{tikzpicture}
+    \caption{Изопрен $\mathrm{C_5H_8}$ -- заједнички електрони у пресецима љуски}
+    \label{fig:izopren}
+\end{figure}
+
+Сваки угљеник има 2 електрона у првој љусци и 8 у другој, а сваки водоник 2. Сви валентни електрони су у везама. У пресеку две љуске угљеника \textbf{2 електрона} значе једноструку везу, а \textbf{4 електрона} двоструку везу. Пети угљеник није у низу са осталима, већ стоји изнад другог као бочна група $\mathrm{CH_3}$.
+
+Пошто су сви валентни електрони попуњени, ово чини гуму идеаалним изолатором. Не може ни један електрон да уђе или да прође кроз молекуле гуме :).
+
+\end{document}

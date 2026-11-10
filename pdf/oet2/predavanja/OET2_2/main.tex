@@ -1,0 +1,404 @@
+\documentclass{article}
+
+% Ćirilica: kodiranje fonta i jezik (srpski, ćirilica)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Veličina strane i margine
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Korisni paketi
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртежи (TikZ) и електрична кола (европски симболи)
+\usepackage{tikz}
+\usepackage[european]{circuitikz}
+\usetikzlibrary{arrows.meta, calc, decorations.markings, babel}
+
+% TikZ стилови који се понављају на цртежима
+\tikzset{
+    pomocna/.style={dashed, gray!70, thin},
+    mreza/.style={gray!25, very thin},
+    kriva/.style={very thick, red!75!black},
+    krivaU/.style={very thick, blue!70!black},
+}
+
+% Оквир за решене примере
+\newtcolorbox[auto counter]{primer}{breakable,
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=10pt}
+
+% Оквир за кључне формуле
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=8pt, right=8pt, top=4pt, bottom=4pt}
+
+\title{ОЕТ 2 -- Отпорник, калем и кондензатор\\у колу једносмерне струје}
+\author{Саобраћајно техничка школа, Београд, Земун}
+\date{}
+
+\begin{document}
+\maketitle
+
+Када у колу једносмерне струје укључимо или искључимо прекидач, струје и
+напони се не морају одмах установити. Кратко време док се мењају зове се
+\textbf{прелазни режим}, а стање које после тога остаје \textbf{стационарно
+стање}. Отпорник реагује тренутно, а кондензатор и калем чувају енергију, па
+се код њих напони и струје мењају постепено.
+
+%==================================================================
+\section{Отпорник}
+%==================================================================
+
+Отпорник енергију не чува, већ је претвара у топлоту ($P = U I = I^2 R$). Чим
+затворимо прекидач, кроз њега потече струја по Омовом закону, $I = E/R$. Нема прелазног режима: струја и напон се мењају \textbf{истовремено и
+скоковито}, а после тога остају стални све док је прекидач затворен.
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[>=Stealth, font=\small]
+        \draw (0,0) to[battery1, l=$E$, invert] (0,2.6)
+              to[switch, l=$\Pi$] (2.4,2.6)
+              to[R, l=$R$, i>^=$i$] (2.4,0) -- (0,0);
+        % --- временски дијаграм ---
+        \begin{scope}[xshift=4.3cm, yshift=0.3cm]
+            \draw[->] (-0.6,0) -- (5.2,0) node[right] {$t$};
+            \draw[->] (0,-0.2) -- (0,2.2);
+            \draw[kriva] (-0.6,0) -- (0,0) -- (0,1.6) -- (4.9,1.6);
+            \node[left] at (0,1.6) {$\dfrac{E}{R}$};
+            \node[below] at (0,0) {$0$};
+            \node[red!75!black, above] at (2.5,1.6) {$i$};
+            \node[font=\footnotesize, align=center] at (2.5,0.6) {прекидач затворен\\у тренутку $t = 0$};
+        \end{scope}
+    \end{circuitikz}
+    \caption{Струја кроз отпорник успоставља се тренутно}
+    \label{fig:R}
+\end{figure}
+
+%==================================================================
+\section{Кондензатор}
+%==================================================================
+
+\subsection{Како се понаша}
+
+Кондензатор чине две проводне плоче раздвојене изолатором (диелектриком).
+Кроз изолатор струја не може да прође, али док се на плочама нагомилава
+наелектрисање, у колу тече струја. Струја кроз кондензатор сразмерна је
+\textbf{брзини промене} напона на њему, а напон је сразмеран наелектрисању
+које је до тренутка $T$ дотекло на плоче:
+
+\begin{kljucno}
+\[
+i(t) = C\,\frac{d u_C(t)}{dt},
+\qquad\qquad
+u_C(T) = u_C(0) + \frac{1}{C}\int_0^T i(t)\,dt
+\]
+\end{kljucno}
+
+Интеграл $\int_0^T i(t)\,dt$ је наелектрисање $Q$ које је дотекло од тренутка
+$0$ до тренутка $T$. Зато друга формула није ништа друго него (а), а енергија
+сачувана у електричном пољу између плоча је (б):
+\begin{align}
+    u_C &= \frac{Q}{C} \tag{а} \\
+    W   &= \frac{C\,U^2}{2} \tag{б}
+\end{align}
+Из прве формуле се види да \textbf{напон на кондензатору не може да се промени
+скоковито}: скок напона значио би бесконачно брзу промену, а тиме и
+бесконачну струју. Када се кондензатор напуни, напон се више не мења, па је
+$i(t) = 0$: у стационарном стању кондензатор се понаша као \textbf{прекид}.
+
+\textbf{Два помоћна израза} која ћемо користити (за $\tau > 0$):
+\[
+\frac{d}{dt}\,e^{-t/\tau} = -\frac{1}{\tau}\,e^{-t/\tau},
+\qquad\qquad
+\int_0^T e^{-t/\tau}\,dt = \Big[-\tau\,e^{-t/\tau}\Big]_0^T = \tau\left(1 - e^{-T/\tau}\right)
+\]
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[font=\small]
+        \draw (0,0) to[battery1, l=$E$, invert] (0,3) -- (1.4,3);
+        \draw (1.4,3) node[ocirc]{} node[above]{1};
+        \draw (1.4,1.9) node[ocirc]{} node[left]{2};
+        \draw (1.4,1.82) -- (1.4,0) node[circ]{};
+        \draw[thick] (2.3,3) -- (1.48,3.12);
+        \node[above] at (1.95,3.12) {$\Pi$};
+        \draw (2.3,3) node[ocirc]{} to[R, l=$R$, i>^=$i$] (5.2,3)
+              to[C, l_=$C$, v^>=$u_C$] (5.2,0) -- (0,0);
+    \end{circuitikz}
+    \caption{Прекидач $\Pi$ у положају 1 пуни кондензатор, а у положају 2 га празни преко отпорника $R$}
+    \label{fig:RC}
+\end{figure}
+
+\subsection{Пуњење}
+
+У тренутку $t = 0$ прекидач пребацимо у положај 1. Кондензатор је празан
+($u_C(0) = 0$), па је цео напон извора на отпорнику и струја је највећа: $E/R$.
+Како се кондензатор пуни, $u_C(t)$ расте, напон на отпорнику опада, па опада и
+струја. По другом Кирхофовом закону је
+
+\begin{equation}
+  E = R\,i(t) + u_C(t) = RC\,\frac{d u_C(t)}{dt} + u_C(t)  
+\end{equation}
+, а решење ове
+једначине је:
+\begin{kljucno}
+\[
+u_C(t) = E\left(1 - e^{-t/\tau}\right), \qquad
+i(t) = \frac{E}{R}\,e^{-t/\tau}, \qquad
+\tau = R\,C \quad [\text{s}]
+\]
+\end{kljucno}
+
+\textbf{Провера изводом:} струју добијамо деривирањем напона:
+\[
+i(t) = C\,\frac{d}{dt}\Big[E\left(1 - e^{-t/\tau}\right)\Big]
+     = C\,E\cdot\frac{1}{\tau}\,e^{-t/\tau}
+     = \frac{C\,E}{R\,C}\,e^{-t/\tau}
+     = \frac{E}{R}\,e^{-t/\tau}
+\]
+
+За $T \to \infty$ на кондензатор дотекне наелектрисање
+$Q = \int_0^\infty i(t)\,dt = \frac{E}{R}\,\tau = C\,E$, као што и треба.
+
+$\tau$ је \textbf{временска константа}. Што је већа, пуњење траје дуже. После
+$\tau$ кондензатор је напуњен до $63\,\%$ од $E$, после $3\tau$ до $95\,\%$, а
+после $5\tau$ до $99\,\%$, па у пракси сматрамо да је напуњен после $5\tau$.
+
+\subsection{Пражњење}
+
+Када прекидач пребацимо у положај 2, напуњени кондензатор ($u_C(0) = E$)
+постаје извор и празни се преко отпорника. Сада у контури нема извора, па је
+$0 = R\,i(t) + u_C(t)$. Струја тече у \textbf{супротном смеру} од струје
+пуњења, па је негативна (време $t$ меримо од тренутка пребацивања прекидача):
+\begin{kljucno}
+\[
+u_C(t) = E\,e^{-t/\tau}, \qquad i(t) = -\frac{E}{R}\,e^{-t/\tau}
+\]
+\end{kljucno}
+
+\textbf{Провера изводом:}
+\[
+i(t) = C\,\frac{d}{dt}\Big[E\,e^{-t/\tau}\Big]
+     = C\,E\cdot\left(-\frac{1}{\tau}\right) e^{-t/\tau}
+     = -\frac{E}{R}\,e^{-t/\tau}
+\]
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth, font=\small]
+        \def\k{1.15}  % cm по τ
+        \def\U{1.6}   % E на цртежу
+        \def\I{0.9}   % E/R на цртежу
+        % осе
+        \draw[->] (-0.4,0) -- ({10*\k+0.5},0) node[right] {$t$};
+        \draw[->] (0,-1.3) -- (0,2.1);
+        \draw[pomocna] (0,\U) -- ({10*\k},\U);
+        \node[left] at (0,\U) {$E$};
+        \node[left] at (0,\I) {$\frac{E}{R}$};
+        \node[left] at (0,-\I) {$-\frac{E}{R}$};
+        \draw[pomocna] (0,-\I) -- (0.3,-\I);
+        % граница пуњење / пражњење
+        \draw[dashed] ({5*\k},-1.25) -- ({5*\k},2.05);
+        \node[font=\footnotesize] at ({2.5*\k},2.25) {пуњење ($\Pi$ у 1)};
+        \node[font=\footnotesize] at ({7.5*\k},2.25) {пражњење ($\Pi$ у 2)};
+        % τ
+        \draw[pomocna] (\k,0) -- (\k,{0.632*\U}) -- (0,{0.632*\U});
+        \node[below, font=\footnotesize] at (\k,0) {$\tau$};
+        \node[above left, font=\footnotesize, inner sep=1pt] at (\k,{0.632*\U}) {$0{,}63E$};
+        \node[below right, font=\footnotesize] at ({5*\k},0) {$5\tau$};
+        % напон u_C
+        \draw[krivaU, domain=0:5, samples=60] plot ({\x*\k},{\U*(1-exp(-\x))});
+        \draw[krivaU, domain=5:10, samples=60] plot ({\x*\k},{\U*(1-exp(-5))*exp(-(\x-5))});
+        \node[blue!70!black, above] at ({3.4*\k},\U) {$u_C$};
+        % струја i
+        \draw[kriva] (-0.4,0) -- (0,0) -- (0,\I);
+        \draw[kriva, domain=0:5, samples=60] plot ({\x*\k},{\I*exp(-\x)});
+        \draw[kriva] ({5*\k},0) -- ({5*\k},-\I);
+        \draw[kriva, domain=5:10, samples=60] plot ({\x*\k},{-\I*exp(-(\x-5))});
+        \node[red!75!black, above right] at ({1.4*\k},{\I*exp(-1.4)}) {$i$};
+    \end{tikzpicture}
+    \caption{Напон $u_C$ и струја $i$ при пуњењу и пражњењу кондензатора}
+    \label{fig:RC-dijagram}
+\end{figure}
+
+\begin{primer}
+Кондензатор $C = 100\,\mu$F пуни се преко отпорника $R = 10$~k$\Omega$ из
+извора $E = 12$~V. Колика је временска константа, колика је почетна струја и
+за које време се кондензатор практично напуни?
+
+\textbf{Решење.}
+$\tau = R\,C = 10^{4}~\Omega \cdot 10^{-4}~\text{F} = 1$~s, \
+$i(0) = \frac{E}{R} = \frac{12~\text{V}}{10^4~\Omega} = 1{,}2$~mA.
+Кондензатор је практично напуњен после $5\tau = 5$~s, а после $1$~s напон на
+њему је $0{,}63\cdot 12 \approx 7{,}6$~V.
+\end{primer}
+
+%==================================================================
+\section{Калем}
+%==================================================================
+
+\subsection{Како се понаша}
+
+Калем је намотана жица. Струја кроз њега ствара магнетно поље. Када се
+струја мења, мења се и поље, па се у калему индукује напон који се
+\textbf{супротставља промени струје}. Напон на калему сразмеран је брзини
+промене струје, а струја је сразмерна интегралу напона од $0$ до $T$:
+
+\begin{kljucno}
+\[
+u_L(t) = L\,\frac{d i(t)}{dt},
+\qquad\qquad
+i(T) = i(0) + \frac{1}{L}\int_0^T u_L(t)\,dt
+\]
+\end{kljucno}
+
+$L$ је \textbf{индуктивност} (јединица хенри, H). Интеграл
+$\int_0^T u_L(t)\,dt$ је промена магнетног флукса $N\Phi$ који обухвата
+намотај (по Фарадејевом закону $u_L(t) = N\,\frac{d\Phi(t)}{dt}$). Зато друга
+формула није ништа друго него (а), а енергија сачувана у магнетном пољу је (б):
+\begin{align}
+    L &= \frac{N\,\Phi}{I} \tag{а} \\
+    W &= \frac{L\,I^2}{2} \tag{б}
+\end{align}
+
+Из прве формуле се види да \textbf{струја кроз калем не може да се промени
+скоковито}: скок струје значио би бесконачан напон. Када се струја устали,
+$\frac{d i(t)}{dt} = 0$, па је и $u_L(t) = 0$: у стационарном стању калем се
+понаша као \textbf{кратак спој} (остаје само мала отпорност жице).
+
+Калем и кондензатор су „супротни”: кондензатор чува напон, а калем струју.
+
+\subsection{Укључење}
+
+Коло је исто као на слици~\ref{fig:RC}, само уместо кондензатора стоји калем
+$L$. Када прекидач пребацимо у положај 1, струја не може одмах да скочи, па
+у првом тренутку ($i(0) = 0$) цео напон извора пада на калему. Струја
+постепено расте, а напон на калему опада. По другом Кирхофовом закону је
+
+\begin{equation}
+    E = R\,i(t) + L\,\frac{d i(t)}{dt}
+\end{equation}
+
+, а решење је:
+\begin{kljucno}
+\[
+i(t) = \frac{E}{R}\left(1 - e^{-t/\tau}\right), \qquad
+u_L(t) = E\,e^{-t/\tau}, \qquad
+\tau = \frac{L}{R} \quad [\text{s}]
+\]
+\end{kljucno}
+
+\textbf{Провера изводом:}
+\[
+u_L(t) = L\,\frac{d}{dt}\Big[\frac{E}{R}\left(1 - e^{-t/\tau}\right)\Big]
+       = L\,\frac{E}{R}\cdot\frac{1}{\tau}\,e^{-t/\tau}
+       = L\,\frac{E}{R}\cdot\frac{R}{L}\,e^{-t/\tau}
+       = E\,e^{-t/\tau}
+\]
+
+\subsection{Искључење}
+
+Када прекидач пребацимо у положај 2, калем одржава струју у истом смеру
+($i(0) = E/R$) и она постепено опада кроз отпорник. У контури нема извора, па
+је $0 = R\,i(t) + L\,\frac{d i(t)}{dt}$. Калем се сада понаша као извор, па
+напон на њему мења знак:
+\begin{kljucno}
+\[
+i(t) = \frac{E}{R}\,e^{-t/\tau}, \qquad u_L(t) = -E\,e^{-t/\tau}
+\]
+\end{kljucno}
+
+\textbf{Провера изводом:}
+\[
+u_L(t) = L\,\frac{d}{dt}\Big[\frac{E}{R}\,e^{-t/\tau}\Big]
+       = L\,\frac{E}{R}\cdot\left(-\frac{R}{L}\right) e^{-t/\tau}
+       = -E\,e^{-t/\tau}
+\]
+
+Ако коло нагло прекинемо, а струја нема куда да тече, она пада готово
+тренутно. Тада је промена струје огромна, па се на калему индукује
+\textbf{врло висок напон} и између контаката прекидача скочи варница. Ова
+појава се користи у \textbf{паљењу мотора}: бобина (калем) при прекиду струје
+даје напон од више хиљада волти за свећицу.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth, font=\small]
+        \def\k{1.15}  % cm по τ
+        \def\U{1.6}   % E на цртежу
+        \def\I{0.9}   % E/R на цртежу
+        % осе
+        \draw[->] (-0.4,0) -- ({10*\k+0.5},0) node[right] {$t$};
+        \draw[->] (0,-1.8) -- (0,2.1);
+        \draw[pomocna] (0,\I) -- ({10*\k},\I);
+        \node[left] at (0,\U) {$E$};
+        \node[left] at (0,-\U) {$-E$};
+        \node[left] at (0,\I) {$\frac{E}{R}$};
+        % граница укључење / искључење
+        \draw[dashed] ({5*\k},-1.75) -- ({5*\k},2.05);
+        \node[font=\footnotesize] at ({2.5*\k},2.25) {укључење ($\Pi$ у 1)};
+        \node[font=\footnotesize] at ({7.5*\k},2.25) {искључење ($\Pi$ у 2)};
+        % τ
+        \draw[pomocna] (\k,0) -- (\k,{0.632*\I});
+        \node[below, font=\footnotesize] at (\k,0) {$\tau$};
+        \node[below right, font=\footnotesize] at ({5*\k},0) {$5\tau$};
+        % струја i
+        \draw[kriva, domain=0:5, samples=60] plot ({\x*\k},{\I*(1-exp(-\x))});
+        \draw[kriva, domain=5:10, samples=60] plot ({\x*\k},{\I*exp(-(\x-5))});
+        \node[red!75!black, above] at ({3.4*\k},\I) {$i$};
+        % напон u_L
+        \draw[krivaU] (-0.4,0) -- (0,0) -- (0,\U);
+        \draw[krivaU, domain=0:5, samples=60] plot ({\x*\k},{\U*exp(-\x)});
+        \draw[krivaU] ({5*\k},0) -- ({5*\k},-\U);
+        \draw[krivaU, domain=5:10, samples=60] plot ({\x*\k},{-\U*exp(-(\x-5))});
+        \node[blue!70!black, above right] at ({1.3*\k},{\U*exp(-1.3)}) {$u_L$};
+    \end{tikzpicture}
+    \caption{Струја $i$ и напон $u_L$ при укључењу и искључењу калема}
+    \label{fig:RL-dijagram}
+\end{figure}
+
+\begin{primer}
+Калем $L = 0{,}5$~H везан је редно са отпорником $R = 10\,\Omega$ на извор
+$E = 12$~V. Колика је временска константа, колика је струја у стационарном
+стању и колика је тада енергија у калему?
+
+\textbf{Решење.}
+$\tau = \frac{L}{R} = \frac{0{,}5}{10} = 0{,}05$~s $= 50$~ms, \
+$I = \frac{E}{R} = 1{,}2$~A, \
+$W = \frac{L\,I^2}{2} = \frac{0{,}5\cdot 1{,}2^2}{2} = 0{,}36$~J.
+Струја се практично устали после $5\tau = 250$~ms.
+\end{primer}
+
+%==================================================================
+\section{Поређење}
+%==================================================================
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{lccc}
+        \toprule
+                                   & \textbf{Отпорник} & \textbf{Кондензатор} & \textbf{Калем} \\
+        \midrule
+        не може скоковито да се промени & --          & напон $u_C$          & струја $i$ \\
+        у тренутку укључења        & $i = E/R$ одмах   & као кратак спој      & као прекид \\
+        у стационарном стању       & $i = E/R$         & прекид ($i = 0$)     & кратак спој \\
+        временска константа        & --                & $\tau = R\,C$        & $\tau = L/R$ \\
+        енергија                   & топлота $I^2 R\,t$ & $\dfrac{C U^2}{2}$ (ел. поље) & $\dfrac{L I^2}{2}$ (маг. поље) \\
+        \bottomrule
+    \end{tabular}
+    \caption{Понашање елемената у колу једносмерне струје}
+    \label{tab:poredjenje-dc}
+\end{table}
+
+\end{document}

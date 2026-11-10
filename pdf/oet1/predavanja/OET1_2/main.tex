@@ -1,0 +1,400 @@
+\documentclass{article}
+
+% Ćirilica: kodiranje fonta i jezik (srpski, ćirilica)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Veličina strane i margine
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Korisni paketi
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tcolorbox}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртежи (TikZ)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.markings, babel}
+
+% Електричне шеме (отпорници, кондензатори, извори)
+\usepackage[european]{circuitikz}
+
+% TikZ стилови који се понављају на цртежима
+\tikzset{
+    naboj/.style={circle, draw, thick, minimum size=6mm, inner sep=0pt, font=\small},
+    jezgro/.style={circle, draw, thick, fill=gray!15, minimum size=7mm, inner sep=0pt, font=\small},
+    elektron/.style={circle, draw, fill=cyan!30, inner sep=0pt, minimum size=5pt},
+    supljina/.style={circle, draw, thick, minimum size=5mm, inner sep=0pt, font=\small},
+    sredstrelica/.style={postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Stealth}}}},
+}
+
+\title{ОЕТ 1 - Струја и колу}
+\author{Саобраћајно техничка школа, Београд, Земун}
+
+\begin{document}
+\maketitle
+
+\section{Компоненте у колу}
+
+% ------------------------------------------------------------------
+\subsection{Једносмерна и наизменична струја}
+
+Струја је усмерено кретање наелектрисања. Према томе како се мења током времена, делимо је на \textbf{једносмерну} и \textbf{наизменичну}.
+
+\textbf{Једносмерна струја (DC)} тече увек у истом смеру. Најчешће јој је и јачина стална. Добијамо је из батерије, акумулатора или исправљача (пуњача).
+
+\textbf{Наизменична струја (AC)} периодично мења и смер и јачину. Најчешће има облик синусоиде. Таква је струја у градској мрежи.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % --- (а) једносмерна ---
+        \draw[->] (0,0) -- (4.2,0) node[below] {$t$};
+        \draw[->] (0,-1.4) -- (0,1.6) node[left] {$i$};
+        \draw[very thick, blue] (0,0.9) -- (3.9,0.9);
+        \node[left] at (0,0.9) {$I$};
+        \node at (2,-1.9) {(а) једносмерна};
+        % --- (б) наизменична ---
+        \begin{scope}[xshift=5.6cm]
+            \draw[->] (0,0) -- (4.2,0) node[below] {$t$};
+            \draw[->] (0,-1.4) -- (0,1.6) node[left] {$i$};
+            \draw[very thick, red, domain=0:3.9, samples=120] plot (\x, {sin(180*\x/1.5)});
+            % период T
+            \draw[dashed] (0.375,1) -- (0.375,1.25);
+            \draw[dashed] (1.875,1) -- (1.875,1.25);
+            \draw[<->] (0.375,1.2) -- (1.875,1.2) node[midway, above] {$T$};
+            \node at (2,-1.9) {(б) наизменична};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Струја током времена: (а) стално у истом смеру, (б) мења смер}
+    \label{fig:dc-ac}
+\end{figure}
+
+Наизменичну струју описујемо са две величине:
+\begin{itemize}
+    \item \textbf{Период} $T$ -- време за које се заврши један цео циклус. Јединица је секунда (s).
+    \item \textbf{Фреквенција} $f$ -- колико се циклуса деси у једној секунди. Јединица је херц (Hz).
+\end{itemize}
+
+\begin{equation}
+    f = \frac{1}{T}
+\end{equation}
+
+У градској мрежи напон је 230~V, а фреквенција $f = 50$~Hz. Значи да је $T = \frac{1}{50}~\mathrm{s} = 20$~ms и да струја промени смер 100 пута у секунди.
+
+Код наизменичне струје електрони не путују дуж жице. Они само осцилују напред-назад, а енергија се ипак преноси до потрошача.
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw (0,2) to[battery1] (0,0);
+        \node[right] at (0.35,1.35) {$+$};
+        \node[right] at (0.35,0.65) {$-$};
+        \node at (0,-0.6) {једносмерни извор};
+        \draw (4,0) to[sV] (4,2);
+        \node at (4,-0.6) {наизменични извор};
+    \end{circuitikz}
+    \caption{Ознаке извора у шемама}
+    \label{fig:izvori}
+\end{figure}
+
+% ------------------------------------------------------------------
+\subsection{Отпорност и Омов закон}
+
+Сваки материјал се мање или више опире протицању струје. Електрони се при кретању сударају са атомима материјала и то их успорава. Та особина се зове \textbf{електрична отпорност} и обележава се са $R$. Због тих судара се материјал и загрева.
+
+Елементи код којих је отпорност изражена зову се \textbf{отпорници}. На шемама се обележавају на један од следећих начина:
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw (0,0) to[american resistor, l=$R$, o-o] (3,0);
+        % меандар
+        \begin{scope}[xshift=4cm]
+            \draw (0,0) circle (1.5pt);
+            \draw (0,0) -- (0.6,0) -- (0.6,0.3) -- (0.8,0.3) -- (0.8,-0.3) -- (1.0,-0.3) -- (1.0,0.3)
+                -- (1.2,0.3) -- (1.2,-0.3) -- (1.4,-0.3) -- (1.4,0.3) -- (1.6,0.3) -- (1.6,-0.3)
+                -- (1.8,-0.3) -- (1.8,0.3) -- (2.0,0.3) -- (2.0,-0.3) -- (2.2,-0.3) -- (2.2,0) -- (3,0);
+            \draw (3,0) circle (1.5pt);
+            \node at (1.5,0.65) {$R$};
+        \end{scope}
+        \draw (8,0) to[european resistor, l=$R$, o-o] (11,0);
+    \end{circuitikz}
+    \caption{Симболи отпорника}
+    \label{fig:simboli-otpornika}
+\end{figure}
+
+\subsubsection{Од чега зависи отпорност}
+
+Отпорност жице зависи од три ствари:
+\begin{itemize}
+    \item \textbf{дужине} $l$: дужа жица има већу отпорност, јер електрони прелазе дужи пут;
+    \item \textbf{површине попречног пресека} $S$: дебља жица има мању отпорност, јер електрони имају више места;
+    \item \textbf{материјала}: то описује \textbf{специфична отпорност} $\rho$.
+\end{itemize}
+
+\begin{equation}
+    R = \rho \frac{l}{S}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % жица (ваљак)
+        \draw[thick] (0,0.5) -- (6,0.5);
+        \draw[thick] (0,-0.5) -- (6,-0.5);
+        \draw[thick, fill=gray!20] (0,0) ellipse (0.25 and 0.5);
+        \draw[thick] (6,0.5) arc (90:-90:0.25 and 0.5);
+        \draw[thick, dashed] (6,0.5) arc (90:270:0.25 and 0.5);
+        \node at (0,0) {$S$};
+        % дужина
+        \draw[<->] (0,-0.9) -- (6,-0.9) node[midway, below] {$l$};
+    \end{tikzpicture}
+    \caption{Проводник дужине $l$ и попречног пресека $S$}
+    \label{fig:zica}
+\end{figure}
+
+Јединица специфичне отпорности је $\rho_u = \Omega \cdot \mathrm{m}$. Мање $\rho$ значи бољи проводник:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        Материјал & $\rho$ на $20^\circ$C [$\Omega \cdot \mathrm{m}$] \\
+        \hline
+        сребро & $1{,}59 \cdot 10^{-8}$ \\
+        бакар & $1{,}68 \cdot 10^{-8}$ \\
+        алуминијум & $2{,}65 \cdot 10^{-8}$ \\
+        гвожђе & $9{,}7 \cdot 10^{-8}$ \\
+        константан & $4{,}9 \cdot 10^{-7}$ \\
+        \hline
+    \end{tabular}
+    \caption{Специфична отпорност неких материјала}
+    \label{tab:rho}
+\end{table}
+
+Каблови се праве од бакра: проводи скоро као сребро, а много је јефтинији.
+
+\subsubsection{Омов закон}
+
+Да би кроз проводник текла стална струја, на његовим крајевима мора да постоји сталан напон. Ако се напон промени, сразмерно се мења и струја. Ту везу је експериментално утврдио немачки физичар Ом, па се зове \textbf{Омов закон}:
+
+\begin{equation}
+    I = \frac{U}{R}
+\end{equation}
+
+Из њега следи и:
+
+\begin{equation}
+    U = R \cdot I \qquad \text{и} \qquad R = \frac{U}{I}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[>=Stealth]
+        \draw (0,3) to[battery1] (0,0);
+        \draw (0,3) -- (1,3)
+              to[european resistor, l=$R$] (4,3) -- (4,0) -- (0,0);
+        \node[left] at (-0.35,1.8) {$+$};
+        \node[left] at (-0.35,1.2) {$-$};
+        % струја: из + извора, кроз отпорник с лева на десно
+        \draw[->, thick] (1.5,2.4) -- (3.5,2.4) node[midway, below] {$I$};
+        % ознака напона на отпорнику: показује на +
+        \draw[->, thick] (3.6,3.6) to[out=120, in=60] (1.4,3.6);
+        \node at (2.5,4.45) {$U$};
+        \node at (1.1,3.55) {$+$};
+    \end{circuitikz}
+    \caption{Најједноставније коло: извор и отпорник}
+    \label{fig:om-kolo}
+\end{figure}
+
+Јединица отпорности је \textbf{ом}:
+
+\begin{equation}
+    R_u = \frac{U_u}{I_u} = \frac{\mathrm{V}}{\mathrm{A}} = \text{ом} = \Omega
+\end{equation}
+
+Отпорност од једног ома има проводник кроз који при напону од 1~V тече струја од 1~A.
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!60, title=Омов троугао]
+    \begin{minipage}{0.3\linewidth}
+        \centering
+        \begin{tikzpicture}
+            \draw[thick] (0,0) -- (2.4,0) -- (1.2,2) -- cycle;
+            \draw[thick] (0.6,1) -- (1.8,1);
+            \draw[thick] (1.2,0) -- (1.2,1);
+            \node at (1.2,1.35) {$U$};
+            \node at (0.75,0.45) {$I$};
+            \node at (1.65,0.45) {$R$};
+        \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.65\linewidth}
+        Покриј прстом величину коју тражиш, а оно што остане је формула:
+        \begin{itemize}
+            \item покријеш $U$: остаје $I \cdot R$
+            \item покријеш $I$: остаје $\frac{U}{R}$
+            \item покријеш $R$: остаје $\frac{U}{I}$
+        \end{itemize}
+    \end{minipage}
+\end{tcolorbox}
+
+\textbf{Пример:} батерија од $U = 12$~V прикључена је на отпорник $R = 4~\Omega$. Струја је $I = \frac{U}{R} = \frac{12~\mathrm{V}}{4~\Omega} = 3$~A.
+
+% ------------------------------------------------------------------
+\subsection{Капацитивност и кондензатор}
+
+\textbf{Кондензатор} чине два проводника (\textbf{електроде}) раздвојена изолатором (\textbf{диелектриком}). Према облику електрода може бити плочасти, цилиндрични или сферни. Према диелектрику може бити ваздушни, керамички, папирни\dots
+
+Кад на кондензатор доведемо напон $U$, на једној електроди се скупи наелектрисање $+Q$, а на другој $-Q$. Колико наелектрисања кондензатор прими при неком напону, показује \textbf{капацитивност} $C$:
+
+\begin{equation}
+    C = \frac{Q}{U}
+\end{equation}
+
+Јединица капацитивности је \textbf{фарад}:
+
+\begin{equation}
+    C_u = \frac{Q_u}{U_u} = \frac{\mathrm{C}}{\mathrm{V}} = \text{фарад} = \mathrm{F}
+\end{equation}
+
+Један фарад је врло велика јединица. У пракси се користе мање: микрофарад ($1~\mu\mathrm{F} = 10^{-6}$~F), нанофарад ($1~\mathrm{nF} = 10^{-9}$~F) и пикофарад ($1~\mathrm{pF} = 10^{-12}$~F).
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw (0,0) to[C, l=$C$, o-o] (2.5,0);
+        \node at (1.25,-1) {(а) стална};
+        \draw (4,0) to[vC, l=$C$, o-o] (6.5,0);
+        \node at (5.25,-1) {(б) променљива};
+    \end{circuitikz}
+    \caption{Ознаке кондензатора: (а) сталне и (б) променљиве капацитивности}
+    \label{fig:simboli-kondenzatora}
+\end{figure}
+
+\subsubsection{Плочасти кондензатор}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        % задња плоча (+Q)
+        \draw[thick, fill=red!8] (0,0) -- (0,2.6) -- (1.1,3.4) -- (1.1,0.8) -- cycle;
+        % предња плоча (-Q)
+        \draw[thick, fill=blue!8] (1,0) -- (1,2.6) -- (2.1,3.4) -- (2.1,0.8) -- cycle;
+        \node at (0.35,3.35) {$+Q$};
+        \node at (2.45,3.55) {$-Q$};
+        \node at (1.65,1.5) {$S$};
+        % растојање d
+        \draw[<->] (0,-0.3) -- (1,-0.3) node[midway, below] {$d$};
+    \end{tikzpicture}
+    \caption{Плочасти кондензатор: површина плоча $S$, растојање $d$}
+    \label{fig:plocasti}
+\end{figure}
+
+Капацитивност плочастог кондензатора у ваздуху (вакууму) је:
+
+\begin{equation}
+    C_0 = \varepsilon_0 \frac{S}{d}
+\end{equation}
+
+Ако се између плоча стави диелектрик, капацитивност порасте онолико пута колико је $\varepsilon_r$:
+
+\begin{equation}
+    C = \varepsilon_r C_0 = \varepsilon \frac{S}{d}
+\end{equation}
+
+Капацитивност је дакле већа ако су:
+\begin{itemize}
+    \item плоче \textbf{веће} (веће $S$),
+    \item плоче \textbf{ближе} (мање $d$),
+    \item између њих диелектрик са \textbf{већим} $\varepsilon_r$ (видети табелу \ref{tab:dielektrici}).
+\end{itemize}
+
+Зато се кондензатори праве од танких металних фолија које су веома близу, раздвојене чврстим диелектриком, и смотане у ролну.
+
+Као кондензатор се понашају и сви метални делови раздвојени изолацијом, ако између њих постоји напон. На пример, две жице у истом каблу.
+
+\subsubsection{Кондензатор у колу једносмерне струје}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[>=Stealth]
+        \draw (0,3) to[battery1] (0,0);
+        \draw (0,3) -- (1,3)
+              to[european resistor, l=$R$] (3.5,3) -- (4.5,3)
+              to[C, l=$C$] (4.5,0) -- (0,0);
+        \node[left] at (-0.35,1.8) {$+$};
+        \node[left] at (-0.35,1.2) {$-$};
+        \draw[->, thick] (1.2,2.4) -- (3.3,2.4) node[midway, below] {$I$};
+    \end{circuitikz}
+    \caption{Кондензатор у колу једносмерне струје}
+    \label{fig:c-dc-kolo}
+\end{figure}
+
+\begin{itemize}
+    \item У тренутку укључења кондензатор је празан и струја тече.
+    \item Електрони долазе на једну плочу, а одлазе са друге, привидно је као да \textbf{прескачу} на другу страну. Кроз диелектрик не пролазе.
+    \item Како се кондензатор пуни, напон на њему расте, а струја опада.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth]
+        \draw[->] (0,0) -- (7,0) node[below] {$t$};
+        \draw[->] (0,0) -- (0,3) ;
+        % напон извора
+        \draw[dashed] (0,2.4) -- (6.6,2.4);
+        \node[left] at (0,2.4) {$U$};
+        % напон на кондензатору
+        \draw[very thick, blue, domain=0:6.5, samples=100] plot (\x, {2.4*(1-exp(-\x/1.2))});
+        \node[blue, right] at (6.5,2.25) {$u_C$};
+        % струја
+        \draw[very thick, red, domain=0:6.5, samples=100] plot (\x, {2.1*exp(-\x/1.2)});
+        \node[red, right] at (6.5,0.25) {$i$};
+        % тау и 5 тау
+        \draw[dotted] (1.2,0) -- (1.2,1.52);
+        \node[below] at (1.2,0) {$\tau$};
+        \draw[dotted] (6,0) -- (6,2.4);
+        \node[below] at (6,0) {$5\tau$};
+    \end{tikzpicture}
+    \caption{Пуњење кондензатора: напон $u_C$ расте, струја $i$ опада}
+    \label{fig:punjenje}
+\end{figure}
+
+Напуњен кондензатор задржава наелектрисање. Ако га откачимо од извора и вежемо на неки потрошач, он се празни кроз њега, као мала батерија. Тако ради блиц на фотоапарату.
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!60, title=Важно]
+    У колу једносмерне струје напуњен кондензатор \textbf{не пропушта струју}. Понаша се као \textbf{прекид}.
+\end{tcolorbox}
+
+\subsubsection{Кондензатор у колу наизменичне струје}
+
+\begin{itemize}
+    \item Напон извора стално мења смер, па се кондензатор стално пуни, празни и пуни у супротном смеру.
+    \item Зато у колу \textbf{стално тече струја}, иако кроз диелектрик не прође ни један електрон.
+    \item Ако редно са кондензатором вежемо сијалицу, она ће стално светлети. На батерији би само кратко бљеснула.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}
+        \draw (0,0) to[sV] (0,3) -- (1,3)
+              to[C, l=$C$] (3.5,3) -- (4.5,3)
+              to[lamp] (4.5,0) -- (0,0);
+    \end{circuitikz}
+    \caption{Сијалица редно са кондензатором у колу наизменичне струје светли}
+    \label{fig:c-ac-kolo}
+\end{figure}
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!60, title=Важно]
+    \begin{itemize}
+        \item \textbf{Једносмерна струја}: кондензатор се напуни и после тога \textbf{не пропушта} струју (прекид).
+        \item \textbf{Наизменична струја}: кондензатор се стално пуни и празни, па \textbf{пропушта} струју.
+        \item Што је фреквенција \textbf{већа}, кондензатор \textbf{боље} пропушта струју.
+    \end{itemize}
+\end{tcolorbox}
+
+\end{document}

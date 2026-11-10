@@ -1,0 +1,33 @@
+\babel@toc {serbianc}{}\relax 
+\contentsline {subsection}{\numberline {0.2.1}Прање и брисање ветробрана и фарова}{2}{subsection.0.2.1}%
+\contentsline {subsubsection}{\numberline {0.2.1.1}Прање и брисање ветробрана и задњег стакла}{2}{subsubsection.0.2.1.1}%
+\contentsline {subsubsection}{\numberline {0.2.1.2}Уређај за прање и брисање предњих фарова}{2}{subsubsection.0.2.1.2}%
+\contentsline {subsubsection}{\numberline {0.2.1.3}Сензори за кишне капи и прљавштину}{3}{subsubsection.0.2.1.3}%
+\contentsline {subsection}{\numberline {0.2.2}Звучни сигнални уређаји}{3}{subsection.0.2.2}%
+\contentsline {subsubsection}{\numberline {0.2.2.1}Електрична сирена са мембраном}{4}{subsubsection.0.2.2.1}%
+\contentsline {subsubsection}{\numberline {0.2.2.2}Електропнеуматска труба}{4}{subsubsection.0.2.2.2}%
+\contentsline {subsubsection}{\numberline {0.2.2.3}Моторна пнеуматска труба}{4}{subsubsection.0.2.2.3}%
+\contentsline {subsubsection}{\numberline {0.2.2.4}Електрично напајање сирена}{5}{subsubsection.0.2.2.4}%
+\contentsline {subsubsection}{\numberline {0.2.2.5}Алармне сирене}{5}{subsubsection.0.2.2.5}%
+\contentsline {subsection}{\numberline {0.2.3}Контролни инструменти}{6}{subsection.0.2.3}%
+\contentsline {subsubsection}{\numberline {0.2.3.1}Брзиномер и километар-сат}{6}{subsubsection.0.2.3.1}%
+\contentsline {paragraph}{\numberline {0.2.3.1.1}Опис и конструкција механичког брзиномера}{6}{paragraph.0.2.3.1.1}%
+\contentsline {paragraph}{\numberline {0.2.3.1.2}Опис и конструкција електричног брзиномера}{7}{paragraph.0.2.3.1.2}%
+\contentsline {paragraph}{\numberline {0.2.3.1.3}Механички километар-сат}{7}{paragraph.0.2.3.1.3}%
+\contentsline {paragraph}{\numberline {0.2.3.1.4}Електрични километар-сат}{8}{paragraph.0.2.3.1.4}%
+\contentsline {paragraph}{\numberline {0.2.3.1.5}Електронски брзиномер и километар-сат}{9}{paragraph.0.2.3.1.5}%
+\contentsline {subsubsection}{\numberline {0.2.3.2}Обртомери}{9}{subsubsection.0.2.3.2}%
+\contentsline {paragraph}{\numberline {0.2.3.2.1}Претварачи сигнала -- давачи}{9}{paragraph.0.2.3.2.1}%
+\contentsline {paragraph}{\numberline {0.2.3.2.2}Транзисторски обртомери}{10}{paragraph.0.2.3.2.2}%
+\contentsline {subsubsection}{\numberline {0.2.3.3}Тахографи}{11}{subsubsection.0.2.3.3}%
+\contentsline {paragraph}{\numberline {0.2.3.3.1}Електрични (електронски) тахографи}{11}{paragraph.0.2.3.3.1}%
+\contentsline {subsubsection}{\numberline {0.2.3.4}Мерачи притиска -- манометри}{12}{subsubsection.0.2.3.4}%
+\contentsline {subsubsection}{\numberline {0.2.3.5}Термометри за мерење температуре расхладне течности}{14}{subsubsection.0.2.3.5}%
+\contentsline {subsubsection}{\numberline {0.2.3.6}Показивачи нивоа горива}{17}{subsubsection.0.2.3.6}%
+\contentsline {subsubsection}{\numberline {0.2.3.7}Амперметар и волтметар на возилу}{20}{subsubsection.0.2.3.7}%
+\contentsline {paragraph}{\numberline {0.2.3.7.1}Амперметри, шема везе, опис и конструкција}{20}{paragraph.0.2.3.7.1}%
+\contentsline {paragraph}{\numberline {0.2.3.7.2}Волтметри, шема везе, опис и конструкција}{21}{paragraph.0.2.3.7.2}%
+\contentsline {subsection}{\numberline {0.2.4}Контролне лампице}{22}{subsection.0.2.4}%
+\contentsline {subsubsection}{\numberline {0.2.4.1}Контролна лампица за притисак уља у мотору}{22}{subsubsection.0.2.4.1}%
+\contentsline {subsubsection}{\numberline {0.2.4.2}Контролна лампица за температуру мотора}{23}{subsubsection.0.2.4.2}%
+\contentsline {subsubsection}{\numberline {0.2.4.3}Остале контролне лампице}{23}{subsubsection.0.2.4.3}%

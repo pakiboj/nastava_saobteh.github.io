@@ -1,0 +1,146 @@
+\documentclass{article}
+
+% Ćirilica: kodiranje fonta i jezik (srpski, ćirilica)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Veličina strane i margine
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage[european]{circuitikz}
+
+% Korisni paketi
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртежи (TikZ)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.markings, babel}
+
+% TikZ стилови који се понављају на цртежима
+\tikzset{
+    naboj/.style={circle, draw, thick, minimum size=6mm, inner sep=0pt, font=\small},
+    jezgro/.style={circle, draw, thick, fill=gray!15, minimum size=7mm, inner sep=0pt, font=\small},
+    elektron/.style={circle, draw, fill=cyan!30, inner sep=0pt, minimum size=5pt},
+    supljina/.style={circle, draw, thick, minimum size=5mm, inner sep=0pt, font=\small},
+    sredstrelica/.style={postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Stealth}}}},
+    % --- графици наизменичних величина ---
+    pomocna/.style={dashed, gray!70, thin},
+    mreza/.style={gray!25, very thin},
+    kriva/.style={very thick, red!75!black},
+    % --- проводник у пресеку: празан, тачка (ка нама), крстић (од нас) ---
+    provodnik/.style={circle, draw, thick, fill=white, minimum size=8pt, inner sep=0pt},
+    provodnikT/.style={provodnik, path picture={\fill[black] (path picture bounding box.center) circle (1.1pt);}},
+    provodnikK/.style={provodnik, path picture={
+        \draw (path picture bounding box.south west) -- (path picture bounding box.north east)
+              (path picture bounding box.north west) -- (path picture bounding box.south east);}},
+    oznaka/.style={fill=white, inner sep=1pt, font=\small},
+}
+
+% Оквир за решене примере
+\newtcolorbox[auto counter]{primer}{breakable,
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=10pt}
+
+% Оквир за кључне формуле
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=8pt, right=8pt, top=4pt, bottom=4pt}
+
+\title{ОЕТ 1 - Вежбање}
+\author{Саобраћајно техничка школа, Београд, Земун}
+
+\begin{document}
+
+
+\section{Основне формуле}
+
+\subsection{Електрична отпорност}
+
+Отпорност проводника зависи од његове дужине $l$, површине попречног пресека $S$
+и материјала од ког је направљен (специфична отпорност $\rho$):
+\begin{kljucno}
+\[
+R = \rho \, \frac{l}{S} \qquad [\Omega]
+\]
+\end{kljucno}
+
+Проводност је реципрочна вредност отпорности:
+\[
+G = \frac{1}{R} \qquad [\text{S}]
+\]
+
+Отпорност се мења са температуром ($\alpha$ је температурни коефицијент):
+\[
+R = R_0 \left(1 + \alpha \, \Delta t\right)
+\]
+
+\textbf{Редна веза} -- отпорности се сабирају:
+\[
+R_e = R_1 + R_2 + \dots + R_n
+\]
+
+\textbf{Паралелна веза} -- сабирају се реципрочне вредности:
+\[
+\frac{1}{R_e} = \frac{1}{R_1} + \frac{1}{R_2} + \dots + \frac{1}{R_n},
+\qquad \text{за два отпорника:} \quad R_e = \frac{R_1 R_2}{R_1 + R_2}
+\]
+
+\subsection{Омов закон и снага}
+
+Струја кроз отпорник сразмерна је напону, а обрнуто сразмерна отпорности:
+\begin{kljucno}
+\[
+I = \frac{U}{R} \qquad \Longrightarrow \qquad U = I R, \qquad R = \frac{U}{I}
+\]
+\end{kljucno}
+
+Снага на отпорнику:
+\[
+P = U I = I^2 R = \frac{U^2}{R} \qquad [\text{W}]
+\]
+
+\subsection{Капацитивност}
+
+Капацитивност показује колико наелектрисања $Q$ кондензатор прими при напону $U$:
+\begin{kljucno}
+\[
+C = \frac{Q}{U} \qquad [\text{F}]
+\]
+\end{kljucno}
+
+Капацитивност плочастог кондензатора зависи од површине плоча $S$, растојања
+између њих $d$ и диелектрика између плоча:
+\[
+C = \varepsilon_0 \, \varepsilon_r \, \frac{S}{d},
+\qquad \varepsilon_0 = 8{,}85 \cdot 10^{-12}\,\frac{\text{F}}{\text{m}}
+\]
+
+\textbf{Паралелна веза} -- капацитивности се сабирају:
+\[
+C_e = C_1 + C_2 + \dots + C_n
+\]
+
+\textbf{Редна веза} -- сабирају се реципрочне вредности:
+\[
+\frac{1}{C_e} = \frac{1}{C_1} + \frac{1}{C_2} + \dots + \frac{1}{C_n},
+\qquad \text{за два кондензатора:} \quad C_e = \frac{C_1 C_2}{C_1 + C_2}
+\]
+
+Енергија напуњеног кондензатора:
+\[
+W = \frac{C U^2}{2} = \frac{Q U}{2} \qquad [\text{J}]
+\]
+
+%==================================================================
+% БЕЛЕШКЕ ИЗ СВЕСКЕ (редом по сликама IMG_6501 -- IMG_6508)
+%==================================================================
+
+\end{document}

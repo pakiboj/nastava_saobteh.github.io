@@ -1,0 +1,312 @@
+\documentclass[12pt]{article}
+
+% Ћирилица: кодирање фонта и језик (српски, ћирилица)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Величина стране и маргине
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm]{geometry}
+
+% Корисни пакети
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртање електричних кола (европски симболи)
+\usepackage[european]{circuitikz}
+\usetikzlibrary{arrows.meta, decorations.markings, babel}
+
+% Стрелица на средини линије (за струје у чвору)
+\tikzset{
+    sredstrelica/.style={postaction={decorate}, decoration={markings,
+        mark=at position 0.55 with {\arrow{Stealth[length=7pt]}}}},
+    obilazak/.style={-{Stealth[length=6pt]}, gray!70!black},
+}
+
+% Оквир за задатке
+% (без breakable: задатак се не дели на две стране)
+\newtcolorbox[auto counter]{zadatak}{
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Задатак~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=10pt, after skip=12pt}
+
+% Оквир за решења
+\newtcolorbox{resenje}[1]{breakable,
+    colback=blue!3, colframe=blue!45!black, colbacktitle=blue!45!black, coltitle=white,
+    fonttitle=\bfseries\small, title={Решење задатка~#1},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=10pt, after skip=12pt}
+
+\title{Кирхофови закони -- задаци}
+\author{Основи електротехнике 1}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Решења задатака налазе се на крају документа.
+
+%==================================================================
+% ЗАДАЦИ
+%==================================================================
+
+% ---------- Задатак 1: лак, први Кирхофов закон ----------
+\begin{zadatak}
+\textit{(Први Кирхофов закон)}
+
+У чвор на слици улази струја $I = 10\,\text{A}$. Из чвора излазе струје
+$I_1 = 3\,\text{A}$, $I_2 = 5\,\text{A}$ и струја $I_3$. Израчунати струју $I_3$.
+
+\begin{center}
+\begin{tikzpicture}[thick]
+    \draw[sredstrelica] (-2.2,0) -- (0,0) node[pos=0.45, above]{$I$};
+    \draw[sredstrelica] (0,0)    -- (0,1.8) node[pos=0.55, right]{$I_1$};
+    \draw[sredstrelica] (0,0)    -- (2.2,0) node[pos=0.55, above]{$I_2$};
+    \draw[sredstrelica] (0,0)    -- (0,-1.8) node[pos=0.55, right]{$I_3$};
+    \fill (0,0) circle (3pt);
+\end{tikzpicture}
+\end{center}
+\end{zadatak}
+
+% ---------- Задатак 2: лак, други Кирхофов закон ----------
+\begin{zadatak}
+\textit{(Други Кирхофов закон)}
+
+У колу на слици је $E = 18\,\text{V}$, $R_1 = 2\,\Omega$, $R_2 = 4\,\Omega$ и
+$R_3 = 3\,\Omega$. Израчунати струју у колу и напоне на сва три отпорника.
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E$, invert] (0,3)
+          to[short, i>^=$I$] (1,3)
+          to[R, l=$R_1$] (4,3)
+          to[R, l=$R_2$] (4,0)
+          to[R, l=$R_3$] (0,0);
+\end{circuitikz}
+\end{center}
+\end{zadatak}
+
+% ---------- Задатак 3: тежи, први Кирхофов закон ----------
+\begin{zadatak}
+\textit{(Први Кирхофов закон)}
+
+На слици је приказан део кола са два чвора, $A$ и $B$. Познато је
+$I_1 = 8\,\text{A}$, $I_2 = 3\,\text{A}$ и $I_4 = 9\,\text{A}$. Смерови струја
+означени на слици су \textbf{претпостављени}.
+\begin{enumerate}
+    \item[а)] Израчунати струју $I_3$.
+    \item[б)] Израчунати струју $I_5$ и одредити њен стварни смер.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[thick]
+    \draw[sredstrelica] (-2.2,0) -- (0,0) node[pos=0.45, above]{$I_1$};
+    \draw[sredstrelica] (0,0)    -- (0,-1.8) node[pos=0.55, left]{$I_2$};
+    \draw[sredstrelica] (0,0)    -- (3.5,0) node[pos=0.5, above]{$I_3$};
+    \draw[sredstrelica] (3.5,0)  -- (5.7,0) node[pos=0.55, above]{$I_4$};
+    \draw[sredstrelica] (3.5,0)  -- (3.5,-1.8) node[pos=0.55, right]{$I_5$};
+    \fill (0,0) circle (3pt) node[above left]{$A$};
+    \fill (3.5,0) circle (3pt) node[above right]{$B$};
+\end{tikzpicture}
+\end{center}
+\end{zadatak}
+
+% ---------- Задатак 4: тежи, други Кирхофов закон ----------
+\begin{zadatak}
+\textit{(Други Кирхофов закон)}
+
+У колу на слици је $E_1 = 30\,\text{V}$, $E_2 = 6\,\text{V}$,
+$R_1 = 3\,\Omega$ и $R_2 = 5\,\Omega$. Струја у колу је $I = 2\,\text{A}$ и
+тече у смеру означеном на слици.
+\begin{enumerate}
+    \item[а)] Израчунати отпорност $R_3$.
+    \item[б)] Израчунати напоне на сва три отпорника.
+    \item[в)] Проверити резултат помоћу другог Кирхофовог закона.
+\end{enumerate}
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E_1$, invert] (0,3)
+          to[short, i>^=$I$] (0.8,3)
+          to[R, l=$R_1$] (3,3)
+          to[R, l=$R_2$] (5.5,3)
+          to[battery1, l=$E_2$] (5.5,0)
+          to[R, l=$R_3$] (0,0);
+\end{circuitikz}
+\end{center}
+\end{zadatak}
+
+% ---------- Задатак 5: комбинација оба закона ----------
+\begin{zadatak}
+\textit{(Први и други Кирхофов закон)}
+
+У колу на слици је $E = 24\,\text{V}$, $R_1 = 4\,\Omega$, $R_2 = 6\,\Omega$ и
+$R_3 = 12\,\Omega$. Израчунати:
+\begin{enumerate}
+    \item[а)] еквивалентну отпорност кола,
+    \item[б)] струју $I$ коју даје извор,
+    \item[в)] напон на отпорнику $R_1$ и напон између чворова $A$ и $B$,
+    \item[г)] струје $I_2$ и $I_3$,
+    \item[д)] проверити резултате помоћу првог и другог Кирхофовог закона.
+\end{enumerate}
+
+\begin{center}
+\begin{circuitikz}
+    \draw (0,0) to[battery1, l=$E$, invert] (0,3)
+          to[short, i>^=$I$] (0.8,3)
+          to[R, l=$R_1$] (3.2,3)
+          to[short, -*] (4,3)
+          to[R, l_=$R_2$, i>^=$I_2$, -*] (4,0)
+          -- (0,0);
+    \draw (4,3) -- (7,3) to[R, l_=$R_3$, i>^=$I_3$] (7,0) -- (4,0);
+    \node[above] at (4,3) {$A$};
+    \node[below] at (4,0) {$B$};
+\end{circuitikz}
+\end{center}
+\end{zadatak}
+
+%==================================================================
+% РЕШЕЊА
+%==================================================================
+\newpage
+\section*{Решења}
+
+% ---------- Решење 1 ----------
+\begin{resenje}{1}
+Струја $I$ улази у чвор, а струје $I_1$, $I_2$ и $I_3$ излазе из њега:
+\[
+I = I_1 + I_2 + I_3
+\quad\Longrightarrow\quad
+I_3 = I - I_1 - I_2 = 10\,\text{A} - 3\,\text{A} - 5\,\text{A} = 2\,\text{A}
+\]
+\end{resenje}
+
+% ---------- Решење 2 ----------
+\begin{resenje}{2}
+Обилазимо контуру у смеру казаљке на сату, у смеру струје. Кроз извор
+пролазимо од $-$ ка $+$, па је $E$ позитивна:
+\[
+E = R_1 I + R_2 I + R_3 I = (R_1 + R_2 + R_3)\, I
+\]
+\[
+I = \frac{E}{R_1 + R_2 + R_3}
+  = \frac{18\,\text{V}}{2\,\Omega + 4\,\Omega + 3\,\Omega}
+  = \frac{18\,\text{V}}{9\,\Omega} = 2\,\text{A}
+\]
+Напони на отпорницима:
+\[
+U_1 = R_1 I = 4\,\text{V}, \qquad
+U_2 = R_2 I = 8\,\text{V}, \qquad
+U_3 = R_3 I = 6\,\text{V}
+\]
+\textbf{Провера:} $U_1 + U_2 + U_3 = 4\,\text{V} + 8\,\text{V} + 6\,\text{V}
+= 18\,\text{V} = E$.
+\end{resenje}
+
+% ---------- Решење 3 ----------
+\begin{resenje}{3}
+а) \textbf{Чвор $A$:} струја $I_1$ улази, а $I_2$ и $I_3$ излазе:
+\[
+I_1 = I_2 + I_3
+\quad\Longrightarrow\quad
+I_3 = I_1 - I_2 = 8\,\text{A} - 3\,\text{A} = 5\,\text{A}
+\]
+
+б) \textbf{Чвор $B$:} струја $I_3$ улази, а $I_4$ и $I_5$ (по претпоставци)
+излазе:
+\[
+I_3 = I_4 + I_5
+\quad\Longrightarrow\quad
+I_5 = I_3 - I_4 = 5\,\text{A} - 9\,\text{A} = -4\,\text{A}
+\]
+Резултат је негативан, па струја $I_5$ у ствари \textbf{улази} у чвор $B$ и
+има јачину $4\,\text{A}$.
+
+\textbf{Провера за чвор $B$:} улази $5\,\text{A} + 4\,\text{A} = 9\,\text{A}$,
+излази $9\,\text{A}$.
+\end{resenje}
+
+% ---------- Решење 4 ----------
+\begin{resenje}{4}
+а) Обилазимо контуру у смеру казаљке на сату, у смеру струје:
+\begin{itemize}
+    \item кроз $E_1$ пролазимо од $-$ ка $+$, па је $E_1$ позитивна,
+    \item кроз $E_2$ пролазимо од $+$ ка $-$, па је $E_2$ негативна,
+    \item струја тече у смеру обиласка, па су сви падови напона позитивни.
+\end{itemize}
+\[
+E_1 - E_2 = (R_1 + R_2 + R_3)\, I
+\]
+Одавде изражавамо $R_3$:
+\[
+R_1 + R_2 + R_3 = \frac{E_1 - E_2}{I} = \frac{30\,\text{V} - 6\,\text{V}}{2\,\text{A}}
+= 12\,\Omega
+\]
+\[
+R_3 = 12\,\Omega - R_1 - R_2 = 12\,\Omega - 3\,\Omega - 5\,\Omega = 4\,\Omega
+\]
+
+б) Напони на отпорницима:
+\[
+U_1 = R_1 I = 6\,\text{V}, \qquad
+U_2 = R_2 I = 10\,\text{V}, \qquad
+U_3 = R_3 I = 8\,\text{V}
+\]
+
+в) \textbf{Провера:}
+\[
+U_1 + U_2 + U_3 = 6\,\text{V} + 10\,\text{V} + 8\,\text{V} = 24\,\text{V},
+\qquad
+E_1 - E_2 = 30\,\text{V} - 6\,\text{V} = 24\,\text{V}
+\]
+\end{resenje}
+
+% ---------- Решење 5 ----------
+\begin{resenje}{5}
+а) Отпорници $R_2$ и $R_3$ су паралелно:
+\[
+R_{23} = \frac{R_2 \cdot R_3}{R_2 + R_3}
+       = \frac{6\,\Omega \cdot 12\,\Omega}{6\,\Omega + 12\,\Omega}
+       = \frac{72}{18}\,\Omega = 4\,\Omega
+\]
+Са њима је редно везан $R_1$:
+\[
+R_e = R_1 + R_{23} = 4\,\Omega + 4\,\Omega = 8\,\Omega
+\]
+
+б) Струја извора:
+\[
+I = \frac{E}{R_e} = \frac{24\,\text{V}}{8\,\Omega} = 3\,\text{A}
+\]
+
+в) Напон на $R_1$ и напон између чворова $A$ и $B$:
+\[
+U_1 = R_1 I = 4\,\Omega \cdot 3\,\text{A} = 12\,\text{V}, \qquad
+U_{AB} = R_{23} I = 4\,\Omega \cdot 3\,\text{A} = 12\,\text{V}
+\]
+
+г) Отпорници $R_2$ и $R_3$ су оба прикључени између чворова $A$ и $B$, па је
+на оба напон $U_{AB}$:
+\[
+I_2 = \frac{U_{AB}}{R_2} = \frac{12\,\text{V}}{6\,\Omega} = 2\,\text{A}, \qquad
+I_3 = \frac{U_{AB}}{R_3} = \frac{12\,\text{V}}{12\,\Omega} = 1\,\text{A}
+\]
+
+д) \textbf{Провера првим законом (чвор $A$):} струја $I$ улази, а $I_2$ и
+$I_3$ излазе:
+\[
+I_2 + I_3 = 2\,\text{A} + 1\,\text{A} = 3\,\text{A} = I
+\]
+
+\textbf{Провера другим законом (контура $E \to R_1 \to R_2$):}
+\[
+R_1 I + R_2 I_2 = 4\,\Omega \cdot 3\,\text{A} + 6\,\Omega \cdot 2\,\text{A}
+= 12\,\text{V} + 12\,\text{V} = 24\,\text{V} = E
+\]
+\end{resenje}
+
+\end{document}

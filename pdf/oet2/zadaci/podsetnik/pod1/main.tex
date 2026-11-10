@@ -1,0 +1,228 @@
+\documentclass{article}
+
+% Ćirilica: kodiranje fonta i jezik (srpski, ćirilica)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Veličina strane i margine
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Korisni paketi
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртежи (TikZ)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.markings, babel}
+
+% TikZ стилови који се понављају на цртежима
+\tikzset{
+    pomocna/.style={dashed, gray!70, thin},
+    mreza/.style={gray!25, very thin},
+    kriva/.style={very thick, red!75!black},
+}
+
+% Оквир за решене примере
+\newtcolorbox[auto counter]{primer}{breakable,
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=10pt}
+
+% Оквир за кључне формуле
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=8pt, right=8pt, top=4pt, bottom=4pt}
+
+\title{ОЕТ 2 -- Комплексна импеданса и адмитанса}
+\author{Саобраћајно техничка школа, Београд, Земун}
+\date{}
+
+\begin{document}
+\maketitle
+
+%==================================================================
+\section{Бројеви $1$, $j$, $-1$ и $-j$ на јединичном кругу}
+%==================================================================
+
+По Ојлеровој формули, тачка на јединичном кругу под углом $\theta$ је
+$e^{j\theta} = \cos\theta + j\sin\theta$. Ако уврстимо четири карактеристична
+угла, добијамо четири тачке у којима круг сече осе:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcccc}
+    \toprule
+    $\theta$                    & $0^\circ$      & $90^\circ$     & $180^\circ$     & $270^\circ$ \\
+    $\cos\theta + j\sin\theta$  & $1 + j\cdot 0$ & $0 + j\cdot 1$ & $-1 + j\cdot 0$ & $0 + j\cdot(-1)$ \\
+    резултат                    & $1$            & $j$            & $-1$            & $-j$ \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+Сва четири броја имају модуо 1, па при множењу \textbf{не мењају дужину}
+фазора, већ само \textbf{додају свој угао}. Зато су они, у ствари, упутства
+за окретање:
+
+\begin{kljucno}
+\begin{tabular}{ll}
+    $\cdot\,1$    & ништа се не мења \\
+    $\cdot\,j$    & окрет за $+90^\circ$ (супротно од казаљке): сигнал \textbf{претходи} за $90^\circ$ \\
+    $\cdot\,(-1)$ & окрет за $180^\circ$: сигнал се \textbf{обрне} (промени знак) \\
+    $\cdot\,(-j)$ & окрет за $-90^\circ$ (у смеру казаљке): сигнал \textbf{касни} за $90^\circ$ \\
+\end{tabular}
+\end{kljucno}
+
+Ако напону $u = U_m\sin\omega t$ одговара фазор $\underline{U}$, фазору
+$j\underline{U}$ одговара $U_m\sin(\omega t + 90^\circ)$, а фазору $-j\underline{U}$
+одговара $U_m\sin(\omega t - 90^\circ)$. Види се и зашто је $j^2 = -1$: два окрета
+од $90^\circ$ дају окрет од $180^\circ$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth, font=\small]
+        % --- фазори ---
+        \draw[->, gray] (-1.5,0) -- (1.6,0) node[right] {Re};
+        \draw[->, gray] (0,-1.5) -- (0,1.6) node[above] {Im};
+        \draw[->, very thick, blue!70!black]  (0,0) -- (1.1,0)  node[below right] {$\underline{U}$};
+        \draw[->, very thick, red!75!black]   (0,0) -- (0,1.1)  node[right] {$j\underline{U}$};
+        \draw[->, very thick, gray!60!black]  (0,0) -- (-1.1,0) node[below left] {$-\underline{U}$};
+        \draw[->, very thick, green!50!black] (0,0) -- (0,-1.1) node[right] {$-j\underline{U}$};
+        % --- временски дијаграм ---
+        \begin{scope}[xshift=2.9cm]
+            \def\s{0.0125}
+            \draw[->] (0,0) -- (4.9,0) node[right] {$\omega t$};
+            \draw[->] (0,-1.2) -- (0,1.3);
+            \foreach \d/\l in {90/{90^\circ},180/{180^\circ},270/{270^\circ},360/{360^\circ}}
+                \node[below, font=\scriptsize] at ({\d*\s},-1.0) {$\l$};
+            \draw[very thick, blue!70!black, domain=0:360, samples=80] plot ({\x*\s},{0.9*sin(\x)});
+            \draw[very thick, red!75!black, domain=0:360, samples=80] plot ({\x*\s},{0.9*sin(\x+90)});
+            \draw[very thick, green!50!black, domain=0:360, samples=80] plot ({\x*\s},{0.9*sin(\x-90)});
+            \node[blue!70!black, right, font=\scriptsize] at (5.6,0.7) {$u$};
+            \node[red!75!black, right, font=\scriptsize] at (5.6,0.3) {$j\cdot u$: претходи};
+            \node[green!50!black, right, font=\scriptsize] at (5.6,-0.1) {$-j\cdot u$: касни};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Множење са $j$, $-1$ и $-j$ окреће фазор (лево) и помера синусоиду (десно)}
+    \label{fig:j-okret}
+\end{figure}
+
+%==================================================================
+\section{Импеданса}
+%==================================================================
+
+У колу наизменичне струје отпорник, калем и кондензатор се супротстављају
+струји, али калем и кондензатор уз то и \textbf{померају фазу} струје за
+$90^\circ$. \textbf{Импеданса} $\underline{Z}$ је комплексна отпорност која у
+једном броју носи обе информације: колико елемент смањује струју и за колико
+је помера.
+
+\begin{kljucno}
+\[
+\underline{Z} = \frac{\underline{U}}{\underline{I}} = R + jX = |\underline{Z}|\,e^{j\varphi}
+\qquad [\Omega],
+\qquad
+|\underline{Z}| = \sqrt{R^2 + X^2}, \quad \varphi = \operatorname{arctg}\frac{X}{R}
+\]
+\end{kljucno}
+
+Реални део $R$ је \textbf{резистанса}: она троши енергију и претвара је у
+топлоту. Имагинарни део $X$ је \textbf{реактанса}: она енергију не троши, већ је
+привремено чува у пољу и враћа извору. За основне елементе ($X_L = \omega L$, $X_C = \frac{1}{\omega C}$, и
+$\frac{1}{j} = \frac{j}{j^2} = -j$):
+\[
+\underline{Z}_R = R, \qquad
+\underline{Z}_L = j\omega L = jX_L, \qquad
+\underline{Z}_C = \frac{1}{j\omega C} = -jX_C
+\]
+
+\textbf{Зашто нам треба?} Са импедансом за наизменичну струју важе
+\textbf{исти закони} као за једносмерну: Омов закон
+$\underline{U} = \underline{Z}\,\underline{I}$, Кирхофови закони, редна веза
+$\underline{Z}_e = \underline{Z}_1 + \underline{Z}_2$ и паралелна веза. Једина
+разлика је што рачунамо са комплексним бројевима, уместо да решавамо сложене
+једначине са синусима.
+
+%==================================================================
+\section{Адмитанса}
+%==================================================================
+
+\textbf{Адмитанса} је реципрочна вредност импедансе, као што је проводност
+реципрочна вредност отпорности: $\underline{Y} = \dfrac{1}{\underline{Z}} = G + jB$~[S].
+$G$ је \textbf{кондуктанса}, а $B$ \textbf{сусцептанса}. Адмитансу рачунамо
+тако што бројилац и именилац помножимо конјугованим имениоцем:
+\[
+\underline{Y} = \frac{1}{R + jX} = \frac{R - jX}{(R + jX)(R - jX)} = \frac{R - jX}{R^2 + X^2}
+\qquad\text{и}\qquad
+\underline{Y}_R = \frac{1}{R}, \quad
+\underline{Y}_L = \frac{-j}{\omega L}, \quad
+\underline{Y}_C = j\omega C
+\]
+Адмитанса је згодна код \textbf{паралелне везе}, јер се адмитансе грана
+сабирају: $\underline{Y}_e = \underline{Y}_1 + \underline{Y}_2$.
+
+\textbf{Адмитанса} $\underline{Y}$ је реципрочна вредност импедансе, као што
+је проводност реципрочна вредност отпорности. Показује колико лако елемент
+пропушта наизменичну струју.
+
+\begin{kljucno}
+\[
+\underline{Y} = \frac{1}{\underline{Z}} = \frac{\underline{I}}{\underline{U}} = G + jB = |\underline{Y}|\,e^{-j\varphi}
+\qquad [\text{S}],
+\qquad
+|\underline{Y}| = \sqrt{G^2 + B^2} = \frac{1}{|\underline{Z}|}
+\]
+\end{kljucno}
+
+\begin{itemize}[noitemsep]
+    \item $\underline{Y}$ -- \textbf{адмитанса} (комплексна проводност),
+    \item $G$ -- \textbf{кондуктанса} (реални део, активна проводност), одговара резистанси,
+    \item $B$ -- \textbf{сусцептанса} (имагинарни део, реактивна проводност), одговара реактанси.
+\end{itemize}
+Јединица за све три величине је \textbf{сименс} (S), $1~\text{S} = 1/\Omega$.
+
+Адмитансу рачунамо тако што бројилац и именилац помножимо конјугованим
+имениоцем:
+\[
+\underline{Y} = \frac{1}{R + jX} = \frac{R - jX}{(R + jX)(R - jX)} = \frac{R - jX}{R^2 + X^2}
+\quad\Longrightarrow\quad
+G = \frac{R}{R^2 + X^2}, \qquad B = \frac{-X}{R^2 + X^2}
+\]
+
+\textbf{Сусцептансе калема и кондензатора:}
+\[
+B_L = \frac{1}{\omega L} = \frac{1}{X_L} \quad\text{(индуктивна)}, \qquad
+B_C = \omega C = \frac{1}{X_C} \quad\text{(капацитивна)}
+\]
+па су адмитансе основних елемената:
+\[
+\underline{Y}_R = G = \frac{1}{R}, \qquad
+\underline{Y}_L = \frac{1}{j\omega L} = -jB_L, \qquad
+\underline{Y}_C = j\omega C = jB_C
+\]
+
+Адмитанса је згодна код \textbf{паралелне везе}, јер се адмитансе грана
+сабирају: $\underline{Y}_e = \underline{Y}_1 + \underline{Y}_2$, а кондуктансе и
+сусцептансе посебно: $G_e = G_1 + G_2$, $B_e = B_1 + B_2$.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+    \toprule
+    \textbf{Импеданса} $\underline{Z}$ [$\Omega$] & \textbf{Адмитанса} $\underline{Y}$ [S] & \\
+    \midrule
+    резистанса $R$  & кондуктанса $G$  & реални део \\
+    реактанса $X$   & сусцептанса $B$  & имагинарни део \\
+    $X_L = \omega L$ & $B_L = 1/(\omega L)$ & калем \\
+    $X_C = 1/(\omega C)$ & $B_C = \omega C$ & кондензатор \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

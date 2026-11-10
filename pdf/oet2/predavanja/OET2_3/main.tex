@@ -1,0 +1,374 @@
+\documentclass{article}
+
+% Ćirilica: kodiranje fonta i jezik (srpski, ćirilica)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+
+% Veličina strane i margine
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Korisni paketi
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Цртежи (TikZ)
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.markings, babel}
+
+% TikZ стилови који се понављају на цртежима
+\tikzset{
+    pomocna/.style={dashed, gray!70, thin},
+    mreza/.style={gray!25, very thin},
+    kriva/.style={very thick, red!75!black},
+    krivaU/.style={very thick, blue!70!black},
+}
+
+% Временски дијаграм напона и струје + фазори
+%   #1 -- фазни помак струје у односу на напон (у степенима: 0, 90 или -90)
+%   #2 -- где (у степенима) стоји ознака струје на графику
+%   #3 -- положај ознаке фазора струје (above, right, ...)
+\newcommand{\uidijagram}[3]{%
+\begin{tikzpicture}[>=Stealth, font=\small]
+    \def\s{0.0167}  % cm по степену
+    \def\U{0.95}    % амплитуда напона на цртежу
+    \def\I{0.6}     % амплитуда струје на цртежу
+    \draw[->] (0,0) -- (7.9,0) node[right] {$\omega t$};
+    \draw[->] (0,-1.15) -- (0,1.25);
+    \foreach \d/\l in {90/{\frac{\pi}{2}},180/{\pi},270/{\frac{3\pi}{2}},360/{2\pi}} {
+        \draw[pomocna] ({\d*\s},-\U) -- ({\d*\s},\U);
+        \node[below, font=\scriptsize] at ({\d*\s},-\U) {$\l$};
+    }
+    \draw[krivaU, domain=0:450, samples=100] plot ({\x*\s},{\U*sin(\x)});
+    \draw[kriva, domain=0:450, samples=100] plot ({\x*\s},{\I*sin(\x+#1)});
+    \node[blue!70!black, above] at ({90*\s},\U) {$u$};
+    \node[red!75!black, below] at ({#2*\s},\I) {$i$};
+    % фазори
+    \begin{scope}[xshift=10.2cm]
+        \draw[->, gray] (-0.4,0) -- (1.6,0) node[right] {Re};
+        \draw[->, gray] (0,-1.0) -- (0,1.1) node[above] {Im};
+        \draw[->, very thick, blue!70!black] (0,0) -- (1.25,0) node[below] {$\underline{U}$};
+        \draw[->, very thick, red!75!black] (0,0) -- (#1:0.75) node[#3] {$\underline{I}$};
+        \ifnum#1=0 \else
+            \draw[->] (0.4,0) arc (0:#1:0.4);
+        \fi
+    \end{scope}
+\end{tikzpicture}}
+
+% Оквир за решене примере
+\newtcolorbox[auto counter]{primer}{breakable,
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt,
+    before skip=8pt, after skip=10pt}
+
+% Оквир за кључне формуле
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=8pt, right=8pt, top=4pt, bottom=4pt}
+
+\title{ОЕТ 2 -- Отпорник, калем и кондензатор\\у колу наизменичне струје}
+\author{Саобраћајно техничка школа, Београд, Земун}
+\date{}
+
+\begin{document}
+\maketitle
+
+На сваки елемент доводимо исти напон $u = U_m\sin\omega t$ и посматрамо
+струју. Занимају нас две ствари: \textbf{колика} је струја (то одређује
+импеданса) и \textbf{колико је померена} у односу на напон (фазни помак
+$\varphi$). Омов закон у комплексном облику важи за сва три елемента:
+$\underline{U} = \underline{Z}\,\underline{I}$, односно $I = U/|\underline{Z}|$.
+
+%==================================================================
+\section{Отпорник}
+%==================================================================
+
+\begin{kljucno}
+\[
+\underline{Z}_R = R, \qquad \varphi = 0
+\]
+\end{kljucno}
+
+Отпорност не зависи од фреквенције. Струја $i = \frac{U_m}{R}\sin\omega t$ прати
+напон у сваком тренутку: истовремено пролазе кроз нулу и истовремено достижу
+максимум. Напон и струја су \textbf{у фази}. Сва енергија се претвара у
+топлоту.
+
+\begin{figure}[H]
+    \centering
+    \uidijagram{0}{90}{above}
+    \caption{Отпорник: напон и струја су у фази}
+    \label{fig:R-ac}
+\end{figure}
+
+%==================================================================
+\section{Калем}
+%==================================================================
+
+\begin{kljucno}
+\[
+\underline{Z}_L = jX_L, \qquad X_L = \omega L = 2\pi f L \quad [\Omega], \qquad \varphi = -90^\circ
+\]
+\end{kljucno}
+
+$X_L$ је \textbf{индуктивна реактанса}. Калем се супротставља промени струје.
+Што је фреквенција већа, струја се брже мења, па се калем јаче супротставља:
+$X_L$ \textbf{расте} са фреквенцијом. За $f = 0$ (једносмерна струја) је
+$X_L = 0$, па је калем кратак спој.
+
+Струја $i = \frac{U_m}{X_L}\sin(\omega t - 90^\circ)$ \textbf{касни} за напоном
+за $90^\circ$ (фазор струје је окренут за $-90^\circ$, јер је
+$\underline{I} = \frac{\underline{U}}{jX_L} = -j\frac{\underline{U}}{X_L}$).
+Калем енергију не троши: у једној четвртини периоде је узима, а у следећој је
+враћа извору.
+
+\begin{figure}[H]
+    \centering
+    \uidijagram{-90}{180}{right}
+    \caption{Калем: струја касни за напоном за $90^\circ$}
+    \label{fig:L-ac}
+\end{figure}
+
+\textit{Пример:} калем $L = 0{,}1$~H на мрежи $f = 50$~Hz има
+$X_L = 2\pi\cdot 50\cdot 0{,}1 \approx 31{,}4\,\Omega$.
+
+%==================================================================
+\section{Кондензатор}
+%==================================================================
+
+\begin{kljucno}
+\[
+\underline{Z}_C = -jX_C, \qquad X_C = \frac{1}{\omega C} = \frac{1}{2\pi f C} \quad [\Omega], \qquad \varphi = +90^\circ
+\]
+\end{kljucno}
+
+$X_C$ је \textbf{капацитивна реактанса}. Кроз кондензатор струја тече док се
+пуни и празни. Што је фреквенција већа, то се чешће пуни и празни, па је
+струја већа: $X_C$ \textbf{опада} са фреквенцијом. За $f = 0$ је
+$X_C = \infty$, па је кондензатор прекид.
+
+Струја $i = \frac{U_m}{X_C}\sin(\omega t + 90^\circ)$ \textbf{претходи} напону
+за $90^\circ$ (јер је $\underline{I} = \frac{\underline{U}}{-jX_C} = j\frac{\underline{U}}{X_C}$).
+Струја је највећа када се напон најбрже мења, а то је при проласку кроз нулу.
+Ни кондензатор енергију не троши, већ је наизменично узима и враћа.
+
+\begin{figure}[H]
+    \centering
+    \uidijagram{90}{360}{right}
+    \caption{Кондензатор: струја претходи напону за $90^\circ$}
+    \label{fig:C-ac}
+\end{figure}
+
+\textit{Пример:} кондензатор $C = 100\,\mu$F на мрежи $f = 50$~Hz има
+$X_C = \frac{1}{2\pi\cdot 50\cdot 100\cdot 10^{-6}} \approx 31{,}8\,\Omega$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[>=Stealth, font=\small]
+        \draw[->] (0,0) -- (6.2,0) node[right] {$f$};
+        \draw[->] (0,0) -- (0,3.0) node[left] {$X$, $R$};
+        \draw[very thick, gray!60!black] (0,1.1) -- (5.8,1.1) node[right] {$R$};
+        \draw[very thick, red!75!black] (0,0) -- (5.8,2.75) node[right] {$X_L = 2\pi f L$};
+        \draw[very thick, blue!70!black, domain=0.42:5.8, samples=80] plot (\x,{1.15/\x});
+        \node[blue!70!black, right] at (5.8,0.32) {$X_C = \dfrac{1}{2\pi f C}$};
+    \end{tikzpicture}
+    \caption{Зависност отпорности и реактанси од фреквенције}
+    \label{fig:X-f}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.7}
+    \begin{tabular}{lcccc}
+        \toprule
+        Елемент     & $\underline{Z}$ & $|\underline{Z}|$ & струја у односу на напон & када $f$ расте \\
+        \midrule
+        отпорник    & $R$     & $R$                     & у фази               & не мења се \\
+        калем       & $jX_L$  & $\omega L$              & касни $90^\circ$     & $X_L$ расте \\
+        кондензатор & $-jX_C$ & $\dfrac{1}{\omega C}$   & претходи $90^\circ$  & $X_C$ опада \\
+        \bottomrule
+    \end{tabular}
+    \caption{Отпорник, калем и кондензатор у колу наизменичне струје}
+    \label{tab:rlc-ac}
+\end{table}
+
+%==================================================================
+\section{Редна веза}
+%==================================================================
+
+Кроз све редно везане елементе тече \textbf{иста струја}, а импедансе се
+сабирају:
+\[
+\underline{Z} = R + j(X_L - X_C), \qquad
+|\underline{Z}| = \sqrt{R^2 + (X_L - X_C)^2}, \qquad
+\varphi = \operatorname{arctg}\frac{X_L - X_C}{R}
+\]
+Напони на елементима \textbf{не сабирају се аритметички}, већ као фазори, јер
+нису у фази. Реактансе калема и кондензатора се одузимају. Када је
+$X_L = X_C$, оне се потпуно поништавају, $\underline{Z} = R$, и тада кажемо
+да је коло у \textbf{резонанси}.
+
+\begin{primer}
+Отпорник $R = 30\,\Omega$ и калем $X_L = 40\,\Omega$ везани су редно на
+$U = 100$~V. Израчунати струју и напоне на елементима.
+
+\textbf{Решење.}
+$\underline{Z} = 30 + j40\ \Omega$, \
+$|\underline{Z}| = \sqrt{30^2 + 40^2} = 50\,\Omega$, \
+$I = \dfrac{U}{|\underline{Z}|} = \dfrac{100}{50} = 2$~A, \
+$\varphi = \operatorname{arctg}\dfrac{40}{30} \approx 53^\circ$ (струја касни).
+\[
+U_R = R\,I = 60~\text{V}, \qquad U_L = X_L\,I = 80~\text{V}
+\]
+Збир $60 + 80 = 140$~V није једнак $100$~V! Напони су померени за $90^\circ$,
+па се сабирају као странице правоуглог троугла:
+$\sqrt{60^2 + 80^2} = 100$~V.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small]
+    \def\k{0.03}  % cm по волту
+    \draw[->, very thick, red!75!black] (0,-0.3) -- (1.0,-0.3) node[right] {$\underline{I}$};
+    \draw[->, very thick, blue!70!black] (0,0) -- ({60*\k},0);
+    \node[above, blue!70!black] at ({48*\k},0) {$\underline{U}_R$};
+    \draw[->, very thick, green!50!black] ({60*\k},0) -- ({60*\k},{80*\k}) node[midway, right] {$\underline{U}_L$};
+    \draw[->, very thick, black] (0,0) -- ({60*\k},{80*\k}) node[midway, above left] {$\underline{U}$};
+    \draw[->] (0.6,0) arc (0:53.13:0.6);
+    \node at (26:0.85) {$\varphi$};
+\end{tikzpicture}
+\end{center}
+\end{primer}
+
+\begin{primer}
+Отпорник $R = 8\,\Omega$ и кондензатор $X_C = 6\,\Omega$ везани су редно на
+$U = 50$~V. Израчунати струју и напоне на елементима.
+
+\textbf{Решење.}
+$\underline{Z} = 8 - j6\ \Omega$, \
+$|\underline{Z}| = \sqrt{8^2 + 6^2} = 10\,\Omega$, \
+$I = \dfrac{50}{10} = 5$~A, \
+$\varphi = \operatorname{arctg}\dfrac{6}{8} \approx 37^\circ$ (струја претходи).
+\[
+U_R = 8\cdot 5 = 40~\text{V}, \qquad U_C = 6\cdot 5 = 30~\text{V}, \qquad
+\sqrt{40^2 + 30^2} = 50~\text{V} = U
+\]
+\end{primer}
+
+%==================================================================
+\section{Паралелна веза}
+%==================================================================
+
+На свим паралелно везаним елементима је \textbf{исти напон}, а струје се
+сабирају као фазори. Овде је најлакше радити са адмитансама, јер се оне
+сабирају:
+\[
+\underline{Y} = \frac{1}{R} + \frac{1}{jX_L} + \frac{1}{-jX_C}
+= \frac{1}{R} - j\frac{1}{X_L} + j\frac{1}{X_C},
+\qquad I = U\,|\underline{Y}|
+\]
+
+\begin{primer}
+Отпорник $R = 40\,\Omega$ и калем $X_L = 30\,\Omega$ везани су паралелно на
+$U = 120$~V. Израчунати струје.
+
+\textbf{Решење.}
+Струје кроз гране:
+$I_R = \dfrac{120}{40} = 3$~A (у фази са напоном), \
+$I_L = \dfrac{120}{30} = 4$~A (касни $90^\circ$).
+Укупна струја није $3 + 4 = 7$~A, већ:
+\[
+I = \sqrt{I_R^2 + I_L^2} = \sqrt{3^2 + 4^2} = 5~\text{A}
+\]
+Исто добијамо и преко адмитансе:
+$\underline{Y} = \frac{1}{40} - j\frac{1}{30}$~S,
+$|\underline{Y}| = \sqrt{0{,}025^2 + 0{,}0333^2} \approx 0{,}0417$~S,
+$I = 120\cdot 0{,}0417 = 5$~A, а $|\underline{Z}| = \frac{1}{|\underline{Y}|} = 24\,\Omega$.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\small]
+    \def\k{0.5}  % cm по амперу
+    \draw[->, very thick, blue!70!black] (0,0) -- (2.6,0) node[right] {$\underline{U}$};
+    \draw[->, very thick, gray!60!black] (0,0) -- ({3*\k},0);
+    \node[above, gray!60!black] at ({1.5*\k},0) {$\underline{I}_R$};
+    \draw[->, very thick, green!50!black] ({3*\k},0) -- ({3*\k},{-4*\k}) node[midway, right] {$\underline{I}_L$};
+    \draw[->, very thick, red!75!black] (0,0) -- ({3*\k},{-4*\k}) node[midway, below left] {$\underline{I}$};
+    \draw[->] (0.55,0) arc (0:-53.13:0.55);
+    \node at (-26:0.8) {$\varphi$};
+\end{tikzpicture}
+\end{center}
+\end{primer}
+
+\begin{primer}
+Отпорник $R = 20\,\Omega$ и кондензатор $X_C = 15\,\Omega$ везани су паралелно
+на $U = 60$~V. Израчунати укупну струју.
+
+\textbf{Решење.}
+$I_R = \dfrac{60}{20} = 3$~A, \
+$I_C = \dfrac{60}{15} = 4$~A (претходи $90^\circ$), \
+$I = \sqrt{3^2 + 4^2} = 5$~A, \
+$|\underline{Z}| = \dfrac{U}{I} = \dfrac{60}{5} = 12\,\Omega$.
+\end{primer}
+
+%==================================================================
+\section{Рачунање са импедансама}
+%==================================================================
+
+За $\underline{Z}_1 = 3 + j4\ \Omega$ и $\underline{Z}_2 = 1 - j2\ \Omega$:
+
+\begin{itemize}
+    \item \textbf{Сабирање и одузимање} -- реални део са реалним, имагинарни са
+          имагинарним:
+          $\underline{Z}_1 + \underline{Z}_2 = 4 + j2\ \Omega$, \quad
+          $\underline{Z}_1 - \underline{Z}_2 = 2 + j6\ \Omega$.
+    \item \textbf{Множење} -- као две заграде, уз $j^2 = -1$:
+          $(3 + j4)(1 - j2) = 3 - j6 + j4 - j^2 8 = 11 - j2$.
+    \item \textbf{Дељење} -- бројилац и именилац множимо конјугованим имениоцем:
+          \[
+          \frac{3 + j4}{1 - j2} = \frac{(3 + j4)(1 + j2)}{(1 - j2)(1 + j2)}
+          = \frac{3 + j6 + j4 + j^2 8}{1 + 4} = \frac{-5 + j10}{5} = -1 + j2
+          \]
+\end{itemize}
+
+\begin{kljucno}
+Сабирање и одузимање: најлакше у облику $a + jb$. \\
+Множење и дељење: најлакше у облику $A\,e^{j\theta}$:
+$\;A_1 e^{j\theta_1}\cdot A_2 e^{j\theta_2} = A_1 A_2\, e^{j(\theta_1 + \theta_2)}$,
+$\;\dfrac{A_1 e^{j\theta_1}}{A_2 e^{j\theta_2}} = \dfrac{A_1}{A_2}\, e^{j(\theta_1 - \theta_2)}$.
+\end{kljucno}
+
+%==================================================================
+\section{Примене}
+%==================================================================
+
+Импеданса се користи свуда где ради наизменична струја: у филтерима (нпр.
+скретнице у звучницима), у компензацији реактивне снаге, у прорачуну мотора и
+трансформатора.
+
+\begin{primer}
+Намотај има резистансу $R = 3\,\Omega$ и реактансу $X_L = 4\,\Omega$ и прикључен
+је на $U = 10$~V. Колика је струја и колико касни за напоном?
+
+\textbf{Решење.}
+$\underline{Z} = 3 + j4\ \Omega$, \
+$|\underline{Z}| = \sqrt{3^2 + 4^2} = 5\,\Omega$, \
+$\varphi = \operatorname{arctg}\frac{4}{3} \approx 53^\circ$, \
+$I = \dfrac{U}{|\underline{Z}|} = \dfrac{10}{5} = 2$~A.
+Струја касни за напоном за $53^\circ$.
+\end{primer}
+
+\begin{primer}
+Отпорник $R = 10\,\Omega$ и кондензатор $X_C = 10\,\Omega$ везани су
+паралелно на $U = 10$~V. Колика је укупна струја?
+
+\textbf{Решење.}
+$\underline{Y} = \underline{Y}_R + \underline{Y}_C = 0{,}1 + j0{,}1$~S, \
+$|\underline{Y}| = \sqrt{0{,}1^2 + 0{,}1^2} \approx 0{,}141$~S, \
+$I = U\,|\underline{Y}| \approx 1{,}41$~A.
+Струја претходи напону за $\operatorname{arctg}\frac{0{,}1}{0{,}1} = 45^\circ$.
+\end{primer}
+
+\end{document}
