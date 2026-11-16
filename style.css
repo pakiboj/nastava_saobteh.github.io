@@ -98,6 +98,21 @@ aside > div {
     margin-right: 75px;
     color: #FFF;
 }
+#uputstvo {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px; 
+    line-height: 1.2;
+    margin-right: 75px;
+    
+    /* Izgled kocke i teksta */
+    background-color: #f1f5f9; /* Svetlo siva/plavičasta boja kocke */
+    color: #1e293b;            /* Tamna boja teksta za bolju čitljivost */
+    border: 2px solid #0284c7;  /* Plava ivica oko kocke (promeni debljinu/boju po želji) */
+    border-radius: 8px;        /* Blago zaobljeni uglovi kocke */
+    padding: 10px;             /*Unutrašnji razmak od ivica kocke do teksta */
+}
+
 #logo img {
     width: 250px;
     vertical-align: middle;

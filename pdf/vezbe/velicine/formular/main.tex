@@ -1,0 +1,177 @@
+\documentclass[10pt]{article}
+
+% Ћирилица
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[serbianc]{babel}
+\usepackage{tabularx}
+
+\usepackage[a4paper,top=1.5cm,bottom=1.5cm,left=1.8cm,right=1.8cm]{geometry}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage[european]{circuitikz}
+\usetikzlibrary{arrows.meta, babel}
+
+\usepackage{diagbox}
+\usepackage{colortbl} % (опционо, ако желиш сиву позадину заглавља као у књизи)
+
+\pagestyle{empty}
+\setlength{\columnsep}{0.8cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+% Оквир за кључне податке
+\newtcolorbox{kljucno}{colback=blue!4, colframe=blue!45!black,
+    boxrule=0.5pt, arc=1.5pt, left=6pt, right=6pt, top=3pt, bottom=3pt}
+
+% Решени пример
+\newtcolorbox[auto counter]{primer}{
+    colback=white, colframe=black!55, colbacktitle=black!55, coltitle=white,
+    fonttitle=\bfseries\small, title={Пример~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=5pt, right=5pt, top=2pt, bottom=2pt,
+    before skip=5pt, after skip=5pt}
+
+% Задатак за вежбу (решење се даје само као резултат)
+\newtcolorbox[auto counter]{zadatak}{
+    colback=green!3, colframe=green!40!black, colbacktitle=green!40!black, coltitle=white,
+    fonttitle=\bfseries\small, title={Задатак~\thetcbcounter},
+    boxrule=0.5pt, arc=1.5pt, left=5pt, right=5pt, top=2pt, bottom=2pt,
+    before skip=5pt, after skip=5pt}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries Лабораторијске вежбе из основа електротехнике} \\
+    {\Large Мерење физичких појава.} \\
+\end{center}
+\vspace{10pt}
+
+\noindent
+\textbf{Име и презиме:} \hrulefill \quad
+\textbf{Одељење:} \underline{\hspace{2cm}} \quad
+\textbf{Група:} \underline{\hspace{1.5cm}}
+
+\vspace{15pt}
+
+\section{Вежба 1}
+
+У овој вежби потребно је израчунати висине својих другара из одељења.
+Висина се мери са адекватним инструментом, метром за мерење. Измерену висину
+потребно је уписати у табелу, а онда мерење поновити још 3 пута. Потребно је тако
+измерити 4 својих другара. На крају, потребно је израчунати средњу вредности $\tilde{x}$ и 
+мерну несигурност мерења $u$.
+
+\textbf{Кораци рада:}
+\begin{enumerate}
+  \item Одабрати 4 испитаника и уписати њихова имена 
+  у прву колону табеле (\textbf{ID1}--\textbf{ID5}).
+  \item Поставити испитаника да стоји усправно и помоћу метра измерити 
+  његову висину у метрима ($\text{m}$).
+  \item Измерену вредност уписати у колону за прво мерење.
+  \item Поновити поступак мерења још 5 пута за истог испитаника (сваки пут из почетка мерити
+  ) и резултате уписати у остале колоне.
+  \item Поновити кораке 2-3-4 за преостала четири испитаника.
+  \item На основу прикупљених података у табели, за сваког испитаника израчунати средњу 
+  вредност висине $\tilde{x}$ и мерну несигурност резултата $u$ и израчунати финални резултат $x$.
+  Упоредити одступања између појединачних мерења и правих резултата.
+\end{enumerate}
+
+% \begin{table*}[htbp]
+%   \centering
+%   \renewcommand{\arraystretch}{1.8}
+%   \setlength{\tabcolsep}{4pt} 
+%   \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+%     \hline
+%     \textbf{Име особе} \hspace{0.8 cm} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} &  $\tilde{x}$ & $u$ & \textbf{Резултат $x$}  \\ \hline
+%     & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{0.8 cm} &  \hspace{0.8 cm} &  \hspace{1.6cm} \\ \hline
+%     & & & & &  & & \\ \hline
+%     & & & & & & & \\ \hline
+%     & & & & & & & \\ \hline
+%     & & & & & & & \\ \hline
+%   \end{tabular}
+% \end{table*}
+
+\begin{table*}[htbp]
+  \centering
+  \renewcommand{\arraystretch}{1.8}
+  \begin{tabularx}{\textwidth}{|p{2.8cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|c|}
+    \hline
+    \hline
+    \textbf{Име особе} \hspace{0.8 cm} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} &  $\tilde{x}$ & $u$ & \textbf{Резултат $x$}  \\ \hline
+    & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{0.8 cm} &  \hspace{0.8 cm} &  \hspace{1.6cm} \\ \hline
+    & & & & &  & & \\ \hline
+    & & & & & & & \\ \hline
+    & & & & & & & \\ \hline
+    & & & & & & & \\ \hline
+  \end{tabularx}
+\end{table*}
+
+\newpage
+\section{Вежба 2}
+
+У овој вежbи потребно је измерити електричне отпорности себе и предмета око себе. 
+Пре свега потребно је измерити отпорност себе, поновити мерење 3 пута, и уписати у табелу. 
+Изабрати, из своје околине, 3 предмета и поновити иста мерења и за њих. На крају, потребно 
+је израчунати средњу вредности $\tilde{x}$ и 
+мерну несигурност мерења $u$.
+
+
+\textbf{Кораци рада:}
+\begin{enumerate}
+  \item Подесити мултиметар за мерење електричне отпорности ($\Omega$). Поставити преклопник на 
+  највећи мерни опсег ($1 M \Omega$).
+  \item Ухватити врхове обе игле за мерење прстима леве и десне руке (од прста до прста) и 
+  очитати вредност отпорности са казаљке или екрана. Измерену вредност у омима $\Omega$ уписати у табелу.
+  \item Измерити отпорност 4 различита предмета у лабораторији 
+  (нпр. графитна мина оловке, метални кључ, пластични лењир, дрвени сто, 
+  гумица за брисање). Уколико се казаљка не помера пуно, или екран показује баш мали број(много нула),
+  то значи да је изабран погрешан мерни опсег. Потребно је поставити преклопник на мањи мерни опсег отпора. 
+  \item На основу прикупљених података у табели, за сваки предмет или особу израчунати средњу 
+  вредност отпорности $\tilde{x}$ и мерну несигурност резултата $u$ и израчунати финални резултат $x$.
+  Упоредити одступања између појединачних мерења и правих резултата. Приметити различитост у отпорностима. Да ли је предмет изоратор или диелектрик?
+\end{enumerate}
+
+% \begin{table*}[htbp]
+%   \centering
+%   \renewcommand{\arraystretch}{1.8}
+%   \setlength{\tabcolsep}{4pt} 
+%   \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+%     \hline
+%     \textbf{Назив} \hspace{0.8 cm} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} &  $\tilde{x}$ & $u$ & \textbf{Резултат $x$}  \\ \hline
+%     & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{1.1cm} & \hspace{0.8 cm} &  \hspace{0.8 cm} &  \hspace{1.6cm} \\ \hline
+%     & & & & &  & & \\ \hline
+%     & & & & & & & \\ \hline
+%     & & & & & & & \\ \hline
+%     & & & & & & & \\ \hline
+%   \end{tabular}
+% \end{table*}
+% У преамбулу додај:
+% \usepackage{tabularx}
+
+\begin{table*}[htbp]
+  \centering
+  \renewcommand{\arraystretch}{1.8}
+  \begin{tabularx}{\textwidth}{|p{2.8cm}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|c|}
+    \hline
+    \hline
+    \textbf{Назив} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & $\tilde{x}$ & $u$ & \textbf{Резултат $x$} \\ \hline
+    & & & & & & & \hspace{2.5cm} \\ \hline
+    & & & & & & & \\ \hline
+    & & & & & & & \\ \hline
+    & & & & & & & \\ \hline
+    & & & & & & & \\ \hline
+  \end{tabularx}
+\end{table*}
+
+\begin{multicols}{2}
+
+\end{multicols}
+
+
+\end{document}

@@ -1,0 +1,25 @@
+\babel@toc {serbianc}{}\relax 
+\contentsline {chapter}{\numberline {1}Систем Bosch M-Motronic}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Инсталација за напајање горивом}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Електрична пумпа за гориво}{3}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Филтер за гориво и главна разводна цев}{5}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.3}Регулатор притиска и хидраулична пригушница}{5}{subsection.1.1.3}%
+\contentsline {section}{\numberline {1.2}Убризгавање горива}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Електромагнетна бризгаљка}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Начин убризгавања горива и облици млазница}{6}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Прикупљање података о раду мотора (Сензори)}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Оптерећење мотора и мерење протока ваздуха}{6}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Број обртаја мотора и положај радилице и брегастог вратила}{6}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Остали сензори система}{8}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Обрада података, време и начин убризгавања}{8}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Време убризгавања}{8}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Начин и положај убризгавања}{9}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Угао затварања и угао паљења}{9}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}Прилагођавање условима рада мотора и регулације}{9}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Ламбда регулација и регулација са две сонде}{9}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Регенерација испареног горива (EVAP) и заштита од кликтања}{10}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Рециркулација издувних гасова (EGR), подешавање брегастог вратила и усисног вода}{10}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}Дијагностика (OBD), ECU и повезивање система (CAN)}{11}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Дијагностичка функција система (OBD) и принудна вожња}{11}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}Електронска управљачка јединица (CPU)}{11}{subsection.1.6.2}%
+\contentsline {subsection}{\numberline {1.6.3}Повезивање са другим системима и CAN магистрала}{12}{subsection.1.6.3}%
